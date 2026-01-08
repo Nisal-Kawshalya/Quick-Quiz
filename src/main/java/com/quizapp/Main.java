@@ -19,9 +19,13 @@ public class Main extends Application {
         BorderPane root = loader.load();
 
         Router.setRoot(root);
-        Router.goTo("login");   // FIRST PAGE
+        Router.goTo("login");
 
         Scene scene = new Scene(root, 900, 600);
+        scene.getStylesheets().add(
+                getClass().getResource("/css/styles.css").toExternalForm()
+        );
+
         stage.setTitle("JavaFX Quiz Application");
         stage.setScene(scene);
         stage.show();

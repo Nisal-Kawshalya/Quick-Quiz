@@ -41,6 +41,20 @@ public class Router {
                     );
                     break;
 
+                case "take-quiz":
+                    view = FXMLLoader.load(
+                            Router.class.getResource("/fxml/quiz/TakeQuizView.fxml")
+                    );
+                    break;
+
+                case "quiz-result":
+                    view = FXMLLoader.load(
+                            Router.class.getResource("/fxml/quiz/QuizResultsView.fxml")
+                    );
+                    break;
+
+
+
                 default:
                     throw new IllegalArgumentException("Unknown page: " + page);
             }

@@ -13,27 +13,21 @@
         <Insets top="40" right="40" bottom="40" left="40"/>
     </padding>
 
-    <Label text="Login"
-           style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+    <Label text="Login" styleClass="title"/>
 
     <TextField fx:id="emailField"
-               promptText="Email or Username"
-               prefWidth="300"/>
+               promptText="Email or Username"/>
 
     <PasswordField fx:id="passwordField"
-                   promptText="Password"
-                   prefWidth="300"/>
+                   promptText="Password"/>
 
     <Button text="Login"
-            prefWidth="300"
             onAction="#handleLogin"/>
-            
-    <Button text="Create Account"
-        prefWidth="300"
-        onAction="#goToRegister"/>
 
+    <Button text="Create Account"
+            onAction="#goToRegister"/>
 
     <Label fx:id="errorLabel"
-           style="-fx-text-fill: red;" />
+           styleClass="error"/>
 
 </VBox>
