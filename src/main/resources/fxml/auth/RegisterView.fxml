@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="15"
+      alignment="CENTER"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.quizapp.controllers.auth.RegisterController">
+
+    <padding>
+        <Insets top="40" right="40" bottom="40" left="40"/>
+    </padding>
+
+    <Label text="Register"
+           style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+    <TextField fx:id="nameField"
+               promptText="Full Name"
+               prefWidth="300"/>
+
+    <TextField fx:id="emailField"
+               promptText="Email"
+               prefWidth="300"/>
+
+    <PasswordField fx:id="passwordField"
+                   promptText="Password"
+                   prefWidth="300"/>
+
+    <ComboBox fx:id="roleBox"
+              prefWidth="300"
+              promptText="Select Role" />
+
+    <Button text="Register"
+            prefWidth="300"
+            onAction="#handleRegister"/>
+
+    <Button text="Back to Login"
+            prefWidth="300"
+            onAction="#goToLogin"/>
+
+    <Label fx:id="messageLabel"/>
+
+</VBox>

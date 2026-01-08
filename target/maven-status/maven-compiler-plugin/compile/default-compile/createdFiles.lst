@@ -1,0 +1,5 @@
+com\quizapp\controllers\auth\LoginController.class
+com\quizapp\Router.class
+com\quizapp\routing\Router.class
+com\quizapp\Main.class
+com\quizapp\controllers\auth\RegisterController.class
