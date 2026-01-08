@@ -29,6 +29,18 @@ public class Router {
                     );
                     break;
 
+                case "student":
+                    view = FXMLLoader.load(
+                            Router.class.getResource("/fxml/student/AvailableQuizzesView.fxml")
+                    );
+                    break;
+
+                case "teacher":
+                    view = FXMLLoader.load(
+                            Router.class.getResource("/fxml/dashboard/DashboardView.fxml")
+                    );
+                    break;
+
                 default:
                     throw new IllegalArgumentException("Unknown page: " + page);
             }
