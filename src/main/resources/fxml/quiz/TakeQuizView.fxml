@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="20"
+      alignment="CENTER"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.quizapp.controllers.quiz.TakeQuizController">
+
+    <Label fx:id="timerLabel"/>
+
+    <Label fx:id="questionLabel"
+           styleClass="title"/>
+
+    <RadioButton fx:id="option1"/>
+    <RadioButton fx:id="option2"/>
+    <RadioButton fx:id="option3"/>
+    <RadioButton fx:id="option4"/>
+
+    <Button text="Next"
+            onAction="#nextQuestion"/>
+
+</VBox>

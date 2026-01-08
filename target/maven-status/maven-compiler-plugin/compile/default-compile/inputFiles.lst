@@ -1,9 +1,14 @@
 D:\JavaProjects\JavaFX-Quiz-App\quiz-application\src\main\java\com\quizapp\controllers\auth\LoginController.java
 D:\JavaProjects\JavaFX-Quiz-App\quiz-application\src\main\java\com\quizapp\controllers\auth\RegisterController.java
 D:\JavaProjects\JavaFX-Quiz-App\quiz-application\src\main\java\com\quizapp\controllers\dashboard\DashboardController.java
+D:\JavaProjects\JavaFX-Quiz-App\quiz-application\src\main\java\com\quizapp\controllers\quiz\QuizResultsController.java
+D:\JavaProjects\JavaFX-Quiz-App\quiz-application\src\main\java\com\quizapp\controllers\quiz\TakeQuizController.java
+D:\JavaProjects\JavaFX-Quiz-App\quiz-application\src\main\java\com\quizapp\controllers\student\AvailableQuizzesController.java
 D:\JavaProjects\JavaFX-Quiz-App\quiz-application\src\main\java\com\quizapp\controllers\student\StudentController.java
 D:\JavaProjects\JavaFX-Quiz-App\quiz-application\src\main\java\com\quizapp\Main.java
+D:\JavaProjects\JavaFX-Quiz-App\quiz-application\src\main\java\com\quizapp\models\Question.java
+D:\JavaProjects\JavaFX-Quiz-App\quiz-application\src\main\java\com\quizapp\models\Quiz.java
+D:\JavaProjects\JavaFX-Quiz-App\quiz-application\src\main\java\com\quizapp\models\QuizResultSession.java
 D:\JavaProjects\JavaFX-Quiz-App\quiz-application\src\main\java\com\quizapp\models\Session.java
 D:\JavaProjects\JavaFX-Quiz-App\quiz-application\src\main\java\com\quizapp\models\User.java
-D:\JavaProjects\JavaFX-Quiz-App\quiz-application\src\main\java\com\quizapp\Router.java
 D:\JavaProjects\JavaFX-Quiz-App\quiz-application\src\main\java\com\quizapp\routing\Router.java
