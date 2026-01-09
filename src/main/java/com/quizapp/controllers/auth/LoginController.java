@@ -25,32 +25,26 @@ public class LoginController {
         String email = emailField.getText();
         String password = passwordField.getText();
 
+        System.out.println("Login clicked: " + email); // 🔍 DEBUG
+
         if (email.isEmpty() || password.isEmpty()) {
             errorLabel.setText("Please fill in all fields.");
-            errorLabel.setStyle("-fx-text-fill: red;");
             return;
         }
 
-        /*
-         * DEMO ROLE-BASED LOGIN
-         * (Later we will replace this with Database logic)
-         */
+        // 🔐 ROLE-BASED DEMO LOGIN
+        if (email.equalsIgnoreCase("teacher@example.com")) {
 
-        if (email.equals("teacher@example.com")) {
-
-            // Teacher login
             Session.setUser(new User(email, "TEACHER"));
             Router.goTo("teacher");
 
-        } else if (email.equals("student@example.com")) {
+        } else if (email.equalsIgnoreCase("student@example.com")) {
 
-            // Student login
             Session.setUser(new User(email, "STUDENT"));
             Router.goTo("student");
 
         } else {
             errorLabel.setText("Invalid email or password.");
-            errorLabel.setStyle("-fx-text-fill: red;");
         }
     }
 

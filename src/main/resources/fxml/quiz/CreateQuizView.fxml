@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" spacing="10"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.quizapp.controllers.quiz.CreateQuizController">
+
+    <Label text="Create New Quiz" styleClass="title"/>
+
+    <!-- Quiz Info -->
+    <TextField fx:id="titleField" promptText="Quiz Title"/>
+    <TextField fx:id="timeField" promptText="Time Limit (seconds)"/>
+
+    <Separator/>
+
+    <!-- Question Form -->
+    <Label text="Add Question"/>
+
+    <TextField fx:id="questionField" promptText="Question text"/>
+
+    <TextField fx:id="option1Field" promptText="Option 1"/>
+    <TextField fx:id="option2Field" promptText="Option 2"/>
+    <TextField fx:id="option3Field" promptText="Option 3"/>
+    <TextField fx:id="option4Field" promptText="Option 4"/>
+
+    <!-- Correct Answer -->
+    <Label text="Correct Answer"/>
+
+    <RadioButton text="Option 1" fx:id="correct1"/>
+    <RadioButton text="Option 2" fx:id="correct2"/>
+    <RadioButton text="Option 3" fx:id="correct3"/>
+    <RadioButton text="Option 4" fx:id="correct4"/>
+
+    <Button text="Add Question"
+            onAction="#addQuestion"/>
+
+    <Label fx:id="statusLabel"/>
+
+    <Separator/>
+
+    <Button text="Save Quiz"
+            onAction="#saveQuiz"/>
+
+</VBox>

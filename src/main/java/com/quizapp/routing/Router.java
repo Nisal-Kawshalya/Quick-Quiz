@@ -52,6 +52,13 @@ public class Router {
                             Router.class.getResource("/fxml/quiz/QuizResultsView.fxml")
                     );
                     break;
+                
+                case "create-quiz":
+                    view = FXMLLoader.load(
+                            Router.class.getResource("/fxml/quiz/CreateQuizView.fxml")
+                    );
+                    break;
+
 
 
 
