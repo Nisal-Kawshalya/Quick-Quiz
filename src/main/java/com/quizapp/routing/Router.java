@@ -36,6 +36,12 @@ public class Router {
                     );
                     break;
 
+                case "available-quizzes":
+                    view = FXMLLoader.load(
+                            Router.class.getResource("/fxml/student/AvailableQuizzesView.fxml")
+                    );
+                    break;
+
                 case "teacher-dashboard":
                     view = FXMLLoader.load(
                             Router.class.getResource("/fxml/dashboard/TeacherDashboardView.fxml")
@@ -57,6 +63,18 @@ public class Router {
                 case "quiz-result":
                     view = FXMLLoader.load(
                             Router.class.getResource("/fxml/quiz/QuizResultsView.fxml")
+                    );
+                    break;
+
+                case "view-results":
+                    view = FXMLLoader.load(
+                            Router.class.getResource("/fxml/dashboard/ViewResultsView.fxml")
+                    );
+                    break;
+
+                case "student-results":
+                    view = FXMLLoader.load(
+                            Router.class.getResource("/fxml/student/StudentResultsView.fxml")
                     );
                     break;
 

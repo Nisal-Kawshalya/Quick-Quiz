@@ -19,9 +19,6 @@
     <Label fx:id="statusLabel"
            style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
 
-    <Button text="Retry Quiz"
-            onAction="#retryQuiz"/>
-
     <Button text="Back to Quizzes"
             onAction="#goBackToQuizzes"/>
 

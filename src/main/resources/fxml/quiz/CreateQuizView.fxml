@@ -3,48 +3,54 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" spacing="15"
+<ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
       xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.quizapp.controllers.quiz.CreateQuizController">
 
-    <Label text="Create New Quiz" styleClass="title"/>
+    <VBox alignment="CENTER" spacing="15" fx:id="mainContainer" style="-fx-padding: 20;">
+        <Label text="Create New Quiz" styleClass="title"/>
 
-    <!-- Quiz Info -->
-    <TextField fx:id="titleField" promptText="Quiz Title"/>
-    <TextField fx:id="timeField" promptText="Time Limit (seconds)"/>
+        <!-- Quiz Info -->
+        <TextField fx:id="titleField" promptText="Quiz Title" prefWidth="400"/>
+        <TextField fx:id="timeField" promptText="Time Limit (seconds)" prefWidth="400"/>
 
-    <Separator/>
+        <Separator/>
 
-    <!-- Question Form -->
-    <Label text="Add Question"/>
+        <!-- Previously Created Questions -->
+        <Label text="Questions Added:" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+        <VBox fx:id="questionsList" spacing="10" style="-fx-padding: 10; -fx-pref-width: 500;"/>
 
-    <TextField fx:id="questionField" promptText="Question text"/>
+        <Separator/>
 
-    <TextField fx:id="option1Field" promptText="Option 1"/>
-    <TextField fx:id="option2Field" promptText="Option 2"/>
-    <TextField fx:id="option3Field" promptText="Option 3"/>
-    <TextField fx:id="option4Field" promptText="Option 4"/>
+        <!-- Question Form -->
+        <Label text="Add New Question" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
 
-    <!-- Correct Answer -->
-    <Label text="Correct Answer"/>
+        <TextField fx:id="questionField" promptText="Question text" prefWidth="400"/>
 
-    <RadioButton text="Option 1" fx:id="correct1"/>
-    <RadioButton text="Option 2" fx:id="correct2"/>
-    <RadioButton text="Option 3" fx:id="correct3"/>
-    <RadioButton text="Option 4" fx:id="correct4"/>
+        <TextField fx:id="option1Field" promptText="Option 1" prefWidth="400"/>
+        <TextField fx:id="option2Field" promptText="Option 2" prefWidth="400"/>
+        <TextField fx:id="option3Field" promptText="Option 3" prefWidth="400"/>
+        <TextField fx:id="option4Field" promptText="Option 4" prefWidth="400"/>
 
-    <Button text="Add Question"
-            onAction="#addQuestion"/>
+        <!-- Correct Answer -->
+        <Label text="Correct Answer" style="-fx-font-size: 12px;"/>
 
-    <Label fx:id="statusLabel"/>
+        <RadioButton text="Option 1" fx:id="correct1"/>
+        <RadioButton text="Option 2" fx:id="correct2"/>
+        <RadioButton text="Option 3" fx:id="correct3"/>
+        <RadioButton text="Option 4" fx:id="correct4"/>
 
-    <Separator/>
+        <Button text="Add Question"
+                onAction="#addQuestion" prefWidth="200"/>
 
-    <Button text="Save Quiz"
-            onAction="#saveQuiz"/>
-    
-    <Button text="Back to Dashboard"
-            onAction="#goBack" styleClass="secondary-button" prefWidth="180" />
+        <Label fx:id="statusLabel"/>
 
-</VBox>
+        <Separator/>
+
+        <Button text="Save Quiz"
+                onAction="#saveQuiz" prefWidth="200" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+
+    </VBox>
+
+</ScrollPane>
