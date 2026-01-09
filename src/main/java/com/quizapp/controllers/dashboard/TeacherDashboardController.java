@@ -91,6 +91,11 @@ public class TeacherDashboardController {
         Router.goTo("create-quiz");
     }
 
+    @FXML
+    private void goToViewResults() {
+        Router.goTo("view-results");
+    }
+
     // ===============================
     // LOGOUT WITH CONFIRMATION
     // ===============================

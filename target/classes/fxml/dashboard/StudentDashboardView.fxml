@@ -6,12 +6,15 @@
 
 <VBox alignment="CENTER" spacing="20"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.quizapp.controllers.dashboard.StudentDashboardController">
+      fx:controller="com.quizapp.controllers.student.StudentDashboardController">
 
     <Label text="Student Dashboard" styleClass="title"/>
 
-    <Button text="Available Quizzes"
+    <Button text="View Quiz"
             onAction="#goToAvailableQuizzes"/>
+
+    <Button text="Results"
+            onAction="#goToMyResults"/>
 
     <Button text="Logout"
             onAction="#handleLogout"/>

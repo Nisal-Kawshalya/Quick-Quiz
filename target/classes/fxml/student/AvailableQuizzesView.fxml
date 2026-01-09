@@ -2,25 +2,22 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.*?>
 
-<VBox alignment="CENTER" spacing="15"
+<ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.quizapp.controllers.student.AvailableQuizzesController">
 
-    <Label text="Available Quizzes" styleClass="title"/>
+    <VBox alignment="CENTER" spacing="15" style="-fx-padding: 20;">
+        <Label text="Available Quizzes" styleClass="title"/>
+         
+        <VBox fx:id="quizList" spacing="10" style="-fx-pref-width: 600;"/>
 
-    <Label text="Java Basics Quiz"/>
+        <Button text="Logout"
+                styleClass="logout-btn"
+                onAction="#handleLogout"/>
 
-    <!-- ✅ THIS MUST MATCH METHOD NAME -->
-    <Button text="Start Quiz"
-            onAction="#startQuiz"/>
-     
-     <VBox fx:id="quizList" spacing="10"/>
+    </VBox>
 
-    <Button text="Logout"
-            styleClass="logout-btn"
-            onAction="#handleLogout"/>
-
-</VBox>
+</ScrollPane>

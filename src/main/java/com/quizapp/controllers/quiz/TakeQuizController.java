@@ -13,7 +13,6 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.util.Duration;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TakeQuizController {
@@ -60,32 +59,23 @@ public class TakeQuizController {
     // ===== LOAD QUIZ =====
     private void loadQuiz() {
 
-        List<Question> questions = new ArrayList<>();
+        // Load quiz from QuizSession
+        quiz = com.quizapp.models.QuizSession.getQuiz();
 
-        questions.add(new Question(
-                "What is JVM?",
-                List.of(
-                        "Java Virtual Machine",
-                        "Java Variable Method",
-                        "JSON VM",
-                        "None"
-                ),
-                0
-        ));
+        if (quiz == null) {
+            System.err.println("❌ No quiz selected. Redirecting to dashboard.");
+            Router.goTo("available-quizzes");
+            return;
+        }
 
-        questions.add(new Question(
-                "Java is?",
-                List.of(
-                        "OS",
-                        "Programming Language",
-                        "Browser",
-                        "Game"
-                ),
-                1
-        ));
+        if (quiz.getQuestions() == null || quiz.getQuestions().isEmpty()) {
+            System.err.println("❌ Quiz has no questions. Redirecting to dashboard.");
+            Router.goTo("available-quizzes");
+            return;
+        }
 
-        quiz = new Quiz("Java Basics", questions, 60);
         timeLeft = quiz.getTimeLimitSeconds();
+        System.out.println("✅ Quiz loaded: " + quiz.getTitle() + " with " + quiz.getQuestions().size() + " questions");
     }
 
     // ===== TIMER =====

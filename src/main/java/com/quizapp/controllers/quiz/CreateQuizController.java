@@ -6,10 +6,9 @@ import com.quizapp.models.Quiz;
 import com.quizapp.models.Session;
 import com.quizapp.routing.Router;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,11 +39,15 @@ public class CreateQuizController {
     @FXML
     private Label statusLabel;
 
+    @FXML
+    private VBox questionsList;
+
     // ===============================
     // LOGIC
     // ===============================
     private ToggleGroup correctGroup;
     private final List<Question> questions = new ArrayList<>();
+    private Integer editingIndex = null; // Index of question being edited, null if adding new
 
     // ===============================
     // INITIALIZE
@@ -58,6 +61,8 @@ public class CreateQuizController {
         correct2.setToggleGroup(correctGroup);
         correct3.setToggleGroup(correctGroup);
         correct4.setToggleGroup(correctGroup);
+
+        refreshQuestionsList();
     }
 
     // ===============================
@@ -92,10 +97,19 @@ public class CreateQuizController {
                 correctIndex
         );
 
-        questions.add(question);
+        if (editingIndex != null) {
+            // Update existing question
+            questions.set(editingIndex, question);
+            editingIndex = null;
+            statusLabel.setText("Question updated! Total: " + questions.size());
+        } else {
+            // Add new question
+            questions.add(question);
+            statusLabel.setText("Question added! Total: " + questions.size());
+        }
 
         clearQuestionForm();
-        statusLabel.setText("Question added! Total: " + questions.size());
+        refreshQuestionsList();
     }
 
     // ===============================
@@ -135,7 +149,7 @@ public class CreateQuizController {
             TeacherQuizService.saveQuiz(quiz);
 
             statusLabel.setText("Quiz saved successfully!");
-            Router.goTo("dashboard");
+            Router.goTo("teacher-dashboard");
 
         } catch (NumberFormatException e) {
             statusLabel.setText("Time must be a number.");
@@ -145,11 +159,93 @@ public class CreateQuizController {
         }
     }
 
-    @FXML
-        private void goBack() {
-        Router.goTo("teacher-dashboard");
-}
+    // ===============================
+    // REFRESH QUESTIONS LIST
+    // ===============================
+    private void refreshQuestionsList() {
+        questionsList.getChildren().clear();
 
+        for (int i = 0; i < questions.size(); i++) {
+            Question q = questions.get(i);
+            int index = i;
+
+            Label questionNum = new Label("Question " + (i + 1) + ":");
+            questionNum.setStyle("-fx-font-weight: bold;");
+
+            Label questionText = new Label(q.getQuestionText());
+            questionText.setWrapText(true);
+
+            Label optionsLabel = new Label(
+                    "Options: " + String.join(", ", q.getOptions())
+            );
+            optionsLabel.setWrapText(true);
+
+            Label correctLabel = new Label(
+                    "Correct Answer: Option " + (q.getCorrectIndex() + 1)
+            );
+
+            Button editBtn = new Button("Edit");
+            editBtn.setOnAction(e -> editQuestion(index));
+
+            Button deleteBtn = new Button("Delete");
+            deleteBtn.setStyle("-fx-background-color: #ff4444; -fx-text-fill: white;");
+            deleteBtn.setOnAction(e -> deleteQuestion(index));
+
+            HBox buttonsBox = new HBox(10, editBtn, deleteBtn);
+
+            VBox questionBox = new VBox(5, questionNum, questionText, optionsLabel, correctLabel, buttonsBox);
+            questionBox.setStyle("""
+                    -fx-padding: 10;
+                    -fx-border-color: #ccc;
+                    -fx-border-radius: 5;
+                    -fx-background-color: #f9f9f9;
+                    -fx-background-radius: 5;
+                    """);
+
+            questionsList.getChildren().add(questionBox);
+        }
+
+        if (questions.isEmpty()) {
+            Label noQuestionsLabel = new Label("No questions added yet.");
+            questionsList.getChildren().add(noQuestionsLabel);
+        }
+    }
+
+    // ===============================
+    // EDIT QUESTION
+    // ===============================
+    private void editQuestion(int index) {
+        Question q = questions.get(index);
+
+        questionField.setText(q.getQuestionText());
+        option1Field.setText(q.getOptions().get(0));
+        option2Field.setText(q.getOptions().get(1));
+        option3Field.setText(q.getOptions().get(2));
+        option4Field.setText(q.getOptions().get(3));
+
+        // Set correct answer
+        RadioButton[] radioButtons = {correct1, correct2, correct3, correct4};
+        correctGroup.selectToggle(radioButtons[q.getCorrectIndex()]);
+
+        editingIndex = index;
+        statusLabel.setText("Editing question " + (index + 1) + ". Modify and click 'Add Question' to save changes.");
+    }
+
+    // ===============================
+    // DELETE QUESTION
+    // ===============================
+    private void deleteQuestion(int index) {
+        questions.remove(index);
+        refreshQuestionsList();
+        statusLabel.setText("Question deleted. Total: " + questions.size());
+
+        if (editingIndex != null && editingIndex == index) {
+            editingIndex = null;
+            clearQuestionForm();
+        } else if (editingIndex != null && editingIndex > index) {
+            editingIndex--; // Adjust editing index if needed
+        }
+    }
 
     // ===============================
     // CLEAR QUESTION FORM
@@ -161,5 +257,6 @@ public class CreateQuizController {
         option3Field.clear();
         option4Field.clear();
         correctGroup.selectToggle(null);
+        editingIndex = null;
     }
 }
