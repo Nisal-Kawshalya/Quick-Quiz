@@ -145,6 +145,12 @@ public class CreateQuizController {
         }
     }
 
+    @FXML
+        private void goBack() {
+        Router.goTo("teacher-dashboard");
+}
+
+
     // ===============================
     // CLEAR QUESTION FORM
     // ===============================
