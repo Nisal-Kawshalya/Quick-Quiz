@@ -1,29 +1,18 @@
 package com.quizapp.controllers.auth;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import com.quizapp.firebase.FirebaseAuthService;
+import com.quizapp.firebase.RealtimeDatabaseService;
 import com.quizapp.routing.Router;
-
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
 
 public class RegisterController {
 
-    @FXML
-    private TextField nameField;
-
-    @FXML
-    private TextField emailField;
-
-    @FXML
-    private PasswordField passwordField;
-
-    @FXML
-    private ComboBox<String> roleBox;
-
-    @FXML
-    private Label messageLabel;
+    @FXML private TextField nameField;
+    @FXML private TextField emailField;
+    @FXML private PasswordField passwordField;
+    @FXML private ComboBox<String> roleBox;
+    @FXML private Label messageLabel;
 
     @FXML
     public void initialize() {
@@ -33,27 +22,44 @@ public class RegisterController {
     @FXML
     private void handleRegister() {
 
-        String name = nameField.getText();
-        String email = emailField.getText();
+        String name = nameField.getText().trim();
+        String email = emailField.getText().trim();
         String password = passwordField.getText();
         String role = roleBox.getValue();
 
-        if (name.isEmpty() || email.isEmpty() || password.isEmpty() || role == null) {
+        if (name.isEmpty() || email.isEmpty() ||
+                password.isEmpty() || role == null) {
             messageLabel.setText("Please fill in all fields.");
             messageLabel.setStyle("-fx-text-fill: red;");
             return;
         }
 
-        // TEMPORARY register logic
-        messageLabel.setText("Registration successful as " + role + "!");
-        messageLabel.setStyle("-fx-text-fill: green;");
+        try {
+            boolean registered =
+                    FirebaseAuthService.register(email, password);
+
+            if (!registered) {
+                messageLabel.setText("Registration failed.");
+                messageLabel.setStyle("-fx-text-fill: red;");
+                return;
+            }
+
+            RealtimeDatabaseService.saveUserRole(email, role);
+
+            messageLabel.setText("Registration successful! Please login.");
+            messageLabel.setStyle("-fx-text-fill: green;");
+
+            Router.goTo("login");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            messageLabel.setText("Error: " + e.getMessage());
+            messageLabel.setStyle("-fx-text-fill: red;");
+        }
     }
 
     @FXML
     private void goToLogin() {
-        // Navigation logic will be added in Router step
-       Router.goTo("login");
+        Router.goTo("login");
     }
-
-    
 }

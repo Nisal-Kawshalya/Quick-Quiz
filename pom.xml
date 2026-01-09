@@ -19,6 +19,7 @@
         <javafx.version>17.0.2</javafx.version>
     </properties>
 
+
     <dependencies>
         <!-- JavaFX UI controls -->
         <dependency>
@@ -41,6 +42,20 @@
             <version>5.11.0</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.12.0</version>
+        </dependency>
+
+            <!-- JSON library (required for Firebase REST) -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20240303</version>
+        </dependency>
+
     </dependencies>
 
     <build>
