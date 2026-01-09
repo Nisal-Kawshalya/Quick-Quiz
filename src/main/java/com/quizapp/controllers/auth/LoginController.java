@@ -40,9 +40,9 @@ public class LoginController {
             Session.setUser(new User(email, role));
 
             if (role.equalsIgnoreCase("TEACHER")) {
-                Router.goTo("teacher");
+                Router.goTo("teacher-dashboard");
             } else if (role.equalsIgnoreCase("STUDENT")) {
-                Router.goTo("student");
+                Router.goTo("student-dashboard");
             } else {
                 errorLabel.setText("Unknown role.");
             }

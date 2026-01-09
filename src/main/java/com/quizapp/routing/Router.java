@@ -14,9 +14,10 @@ public class Router {
 
     public static void goTo(String page) {
         try {
-            Parent view = null;
+            Parent view;
 
             switch (page) {
+
                 case "login":
                     view = FXMLLoader.load(
                             Router.class.getResource("/fxml/auth/LoginView.fxml")
@@ -29,15 +30,21 @@ public class Router {
                     );
                     break;
 
-                case "student":
+                case "student-dashboard":
                     view = FXMLLoader.load(
                             Router.class.getResource("/fxml/student/AvailableQuizzesView.fxml")
                     );
                     break;
 
-                case "teacher":
+                case "teacher-dashboard":
                     view = FXMLLoader.load(
-                            Router.class.getResource("/fxml/dashboard/DashboardView.fxml")
+                            Router.class.getResource("/fxml/dashboard/TeacherDashboardView.fxml")
+                    );
+                    break;
+
+                case "create-quiz":
+                    view = FXMLLoader.load(
+                            Router.class.getResource("/fxml/quiz/CreateQuizView.fxml")
                     );
                     break;
 
@@ -52,15 +59,6 @@ public class Router {
                             Router.class.getResource("/fxml/quiz/QuizResultsView.fxml")
                     );
                     break;
-                
-                case "create-quiz":
-                    view = FXMLLoader.load(
-                            Router.class.getResource("/fxml/quiz/CreateQuizView.fxml")
-                    );
-                    break;
-
-
-
 
                 default:
                     throw new IllegalArgumentException("Unknown page: " + page);

@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Quiz {
 
-    // 🔑 For database reference
+    // 🔑 Database ID
     private String id;
 
     // 🧑‍🏫 Teacher info
@@ -21,6 +21,9 @@ public class Quiz {
     // ❓ Questions
     private List<Question> questions;
 
+    // 🚦 Publish status
+    private boolean published;
+
     // ===============================
     // CONSTRUCTOR (Student side)
     // ===============================
@@ -28,6 +31,7 @@ public class Quiz {
         this.title = title;
         this.questions = questions;
         this.timeLimitSeconds = timeLimitSeconds;
+        this.published = false;
     }
 
     // ===============================
@@ -48,6 +52,7 @@ public class Quiz {
         this.difficulty = difficulty;
         this.timeLimitSeconds = timeLimitSeconds;
         this.questions = questions;
+        this.published = false;
     }
 
     // ===============================
@@ -79,5 +84,16 @@ public class Quiz {
 
     public List<Question> getQuestions() {
         return questions;
+    }
+
+    public boolean isPublished() {
+        return published;
+    }
+
+    // ===============================
+    // SETTERS
+    // ===============================
+    public void setPublished(boolean published) {
+        this.published = published;
     }
 }
