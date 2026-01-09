@@ -1,8 +1,9 @@
 package com.quizapp.controllers.quiz;
 
+import com.quizapp.firebase.TeacherQuizService;
 import com.quizapp.models.Question;
 import com.quizapp.models.Quiz;
-import com.quizapp.models.QuizStore;
+import com.quizapp.models.Session;
 import com.quizapp.routing.Router;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -15,13 +16,21 @@ import java.util.List;
 
 public class CreateQuizController {
 
-    // Quiz info
+    // ===============================
+    // QUIZ INFO
+    // ===============================
     @FXML
-    private TextField titleField, timeField;
+    private TextField titleField;
 
-    // Question form
+    @FXML
+    private TextField timeField;
+
+    // ===============================
+    // QUESTION FORM
+    // ===============================
     @FXML
     private TextField questionField;
+
     @FXML
     private TextField option1Field, option2Field, option3Field, option4Field;
 
@@ -31,13 +40,18 @@ public class CreateQuizController {
     @FXML
     private Label statusLabel;
 
-    // Logic
+    // ===============================
+    // LOGIC
+    // ===============================
     private ToggleGroup correctGroup;
     private final List<Question> questions = new ArrayList<>();
 
-    // ===== INITIALIZE =====
+    // ===============================
+    // INITIALIZE
+    // ===============================
     @FXML
     public void initialize() {
+
         correctGroup = new ToggleGroup();
 
         correct1.setToggleGroup(correctGroup);
@@ -46,7 +60,9 @@ public class CreateQuizController {
         correct4.setToggleGroup(correctGroup);
     }
 
-    // ===== ADD QUESTION =====
+    // ===============================
+    // ADD QUESTION
+    // ===============================
     @FXML
     private void addQuestion() {
 
@@ -61,9 +77,9 @@ public class CreateQuizController {
             return;
         }
 
-        int correctIndex =
-                List.of(correct1, correct2, correct3, correct4)
-                        .indexOf(correctGroup.getSelectedToggle());
+        int correctIndex = List.of(
+                correct1, correct2, correct3, correct4
+        ).indexOf(correctGroup.getSelectedToggle());
 
         Question question = new Question(
                 questionField.getText(),
@@ -82,7 +98,9 @@ public class CreateQuizController {
         statusLabel.setText("Question added! Total: " + questions.size());
     }
 
-    // ===== SAVE QUIZ =====
+    // ===============================
+    // SAVE QUIZ (TEACHER → FIREBASE)
+    // ===============================
     @FXML
     private void saveQuiz() {
 
@@ -90,23 +108,46 @@ public class CreateQuizController {
                 || timeField.getText().isEmpty()
                 || questions.isEmpty()) {
 
-            statusLabel.setText("Quiz title, time, and at least one question required.");
+            statusLabel.setText(
+                    "Quiz title, time, and at least one question required."
+            );
             return;
         }
 
-        int time = Integer.parseInt(timeField.getText());
+        try {
+            int timeLimit = Integer.parseInt(timeField.getText());
 
-        Quiz quiz = new Quiz(
-                titleField.getText(),
-                questions,
-                time
-        );
+            // 🔐 Logged-in teacher email
+            String teacherEmail = Session.getUser().getEmail();
 
-        QuizStore.addQuiz(quiz);
-        Router.goTo("dashboard");
+            // 🧠 Build Quiz object (teacher-side constructor)
+            Quiz quiz = new Quiz(
+                    null,                 // id (generated in service)
+                    teacherEmail,
+                    titleField.getText(),
+                    "General",             // subject (can enhance later)
+                    "Medium",              // difficulty (can enhance later)
+                    timeLimit,
+                    questions
+            );
+
+            // 💾 SAVE TO FIREBASE
+            TeacherQuizService.saveQuiz(quiz);
+
+            statusLabel.setText("Quiz saved successfully!");
+            Router.goTo("dashboard");
+
+        } catch (NumberFormatException e) {
+            statusLabel.setText("Time must be a number.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            statusLabel.setText("Failed to save quiz.");
+        }
     }
 
-    // ===== CLEAR QUESTION FORM =====
+    // ===============================
+    // CLEAR QUESTION FORM
+    // ===============================
     private void clearQuestionForm() {
         questionField.clear();
         option1Field.clear();

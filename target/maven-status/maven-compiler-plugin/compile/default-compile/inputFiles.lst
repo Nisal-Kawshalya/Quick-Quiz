@@ -10,6 +10,8 @@ D:\JavaProjects\JavaFX-Quiz-App\quiz-application\src\main\java\com\quizapp\fireb
 D:\JavaProjects\JavaFX-Quiz-App\quiz-application\src\main\java\com\quizapp\firebase\FirebaseConfig.java
 D:\JavaProjects\JavaFX-Quiz-App\quiz-application\src\main\java\com\quizapp\firebase\FirestoreService.java
 D:\JavaProjects\JavaFX-Quiz-App\quiz-application\src\main\java\com\quizapp\firebase\RealtimeDatabaseService.java
+D:\JavaProjects\JavaFX-Quiz-App\quiz-application\src\main\java\com\quizapp\firebase\TeacherQuizService.java
+D:\JavaProjects\JavaFX-Quiz-App\quiz-application\src\main\java\com\quizapp\firebase\TeacherService.java
 D:\JavaProjects\JavaFX-Quiz-App\quiz-application\src\main\java\com\quizapp\Main.java
 D:\JavaProjects\JavaFX-Quiz-App\quiz-application\src\main\java\com\quizapp\models\Question.java
 D:\JavaProjects\JavaFX-Quiz-App\quiz-application\src\main\java\com\quizapp\models\Quiz.java
