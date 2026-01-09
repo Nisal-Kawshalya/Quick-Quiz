@@ -7,6 +7,11 @@ import javafx.fxml.FXML;
 public class DashboardController {
 
     @FXML
+    private void goToCreateQuiz() {
+        Router.goTo("create-quiz");
+    }
+
+    @FXML
     private void handleLogout() {
         Session.clear();
         Router.goTo("login");

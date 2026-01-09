@@ -22,6 +22,7 @@
                    promptText="Password"/>
 
     <Button text="Login"
+             prefWidth="300"
             onAction="#handleLogin"/>
 
     <Button text="Create Account"
