@@ -2,6 +2,7 @@ package com.quizapp.controllers.dashboard;
 
 import com.quizapp.firebase.TeacherQuizService;
 import com.quizapp.models.Quiz;
+import com.quizapp.models.QuizSession;
 import com.quizapp.models.Session;
 import com.quizapp.routing.Router;
 import javafx.fxml.FXML;
@@ -41,16 +42,17 @@ public class TeacherDashboardController {
 
             for (Quiz quiz : myQuizzes) {
 
+                // ===== QUIZ INFO =====
                 Label title = new Label("📘 " + quiz.getTitle());
                 Label info = new Label(
                         "Difficulty: " + quiz.getDifficulty()
                                 + " | Time: " + quiz.getTimeLimitSeconds() + "s"
                 );
 
+                // ===== PUBLISH BUTTON =====
                 Button publishBtn = new Button(
                         quiz.isPublished() ? "Published" : "Publish"
                 );
-
                 publishBtn.setDisable(quiz.isPublished());
 
                 publishBtn.setOnAction(e -> {
@@ -63,7 +65,18 @@ public class TeacherDashboardController {
                     }
                 });
 
-                HBox actions = new HBox(10, publishBtn);
+                // ===== RESULTS BUTTON (IMPORTANT) =====
+                Button resultsBtn = new Button("Results");
+                resultsBtn.setDisable(!quiz.isPublished());
+
+                resultsBtn.setOnAction(e -> {
+                    // Store selected quiz
+                    QuizSession.setQuiz(quiz);
+                    Router.goTo("view-results");
+                });
+
+                // ===== ACTION BAR =====
+                HBox actions = new HBox(10, publishBtn, resultsBtn);
 
                 VBox quizBox = new VBox(5, title, info, actions);
                 quizBox.setStyle("""
@@ -89,11 +102,6 @@ public class TeacherDashboardController {
     @FXML
     private void goToCreateQuiz() {
         Router.goTo("create-quiz");
-    }
-
-    @FXML
-    private void goToViewResults() {
-        Router.goTo("view-results");
     }
 
     // ===============================

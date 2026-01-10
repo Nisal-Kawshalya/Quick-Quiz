@@ -1,9 +1,12 @@
 package com.quizapp.controllers.quiz;
 
 
+import com.quizapp.firebase.RealtimeDatabaseService;
 import com.quizapp.models.Question;
 import com.quizapp.models.Quiz;
 import com.quizapp.models.QuizResultSession;
+import com.quizapp.models.QuizSession;
+import com.quizapp.models.Session;
 import com.quizapp.routing.Router;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -42,10 +45,8 @@ public class TakeQuizController {
     @FXML
     public void initialize() {
 
-        // ✅ Create ToggleGroup manually
         optionsGroup = new ToggleGroup();
 
-        // ✅ Attach ToggleGroup to RadioButtons
         option1.setToggleGroup(optionsGroup);
         option2.setToggleGroup(optionsGroup);
         option3.setToggleGroup(optionsGroup);
@@ -59,23 +60,15 @@ public class TakeQuizController {
     // ===== LOAD QUIZ =====
     private void loadQuiz() {
 
-        // Load quiz from QuizSession
-        quiz = com.quizapp.models.QuizSession.getQuiz();
+        quiz = QuizSession.getQuiz();
 
-        if (quiz == null) {
-            System.err.println("❌ No quiz selected. Redirecting to dashboard.");
-            Router.goTo("available-quizzes");
-            return;
-        }
-
-        if (quiz.getQuestions() == null || quiz.getQuestions().isEmpty()) {
-            System.err.println("❌ Quiz has no questions. Redirecting to dashboard.");
+        if (quiz == null || quiz.getQuestions() == null || quiz.getQuestions().isEmpty()) {
+            System.err.println("❌ Quiz not loaded properly");
             Router.goTo("available-quizzes");
             return;
         }
 
         timeLeft = quiz.getTimeLimitSeconds();
-        System.out.println("✅ Quiz loaded: " + quiz.getTitle() + " with " + quiz.getQuestions().size() + " questions");
     }
 
     // ===== TIMER =====
@@ -103,7 +96,6 @@ public class TakeQuizController {
 
         Question q = quiz.getQuestions().get(currentIndex);
 
-        // Progress text
         progressLabel.setText(
                 "Question " + (currentIndex + 1) + " / " + quiz.getQuestions().size()
         );
@@ -115,7 +107,6 @@ public class TakeQuizController {
         option3.setText(q.getOptions().get(2));
         option4.setText(q.getOptions().get(3));
 
-        // Clear selection
         optionsGroup.selectToggle(null);
     }
 
@@ -151,17 +142,28 @@ public class TakeQuizController {
     }
 
     // ===== SUBMIT QUIZ =====
-    private void submitQuiz() {
+private void submitQuiz() {
 
-        if (timeline != null) {
-            timeline.stop();
-        }
+    if (timeline != null) timeline.stop();
 
-        QuizResultSession.setResult(
+    QuizResultSession.setResult(score, quiz.getQuestions().size());
+
+    new Thread(() -> {
+        try {
+            RealtimeDatabaseService.saveQuizResult(
+                quiz.getId(),
+                Session.getUser().getEmail(),
                 score,
                 quiz.getQuestions().size()
-        );
+            );
 
-        Router.goTo("quiz-result");
-    }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }).start();
+
+    Router.goTo("quiz-result");
+}
+
+
 }
