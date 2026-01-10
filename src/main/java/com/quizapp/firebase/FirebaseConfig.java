@@ -17,4 +17,8 @@ public class FirebaseConfig {
     // 🗄 Firestore REST base URL
     public static final String FIRESTORE_BASE_URL =
             "https://firestore.googleapis.com/v1/projects/";
+
+    // 📊 Realtime Database URL
+    public static final String REALTIME_DB_URL =
+            "https://quizapp-39b62-default-rtdb.asia-southeast1.firebasedatabase.app/";
 }

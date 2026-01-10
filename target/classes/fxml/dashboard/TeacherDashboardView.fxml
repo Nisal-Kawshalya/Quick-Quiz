@@ -15,10 +15,6 @@
     <Button text="Create Quiz"
             onAction="#goToCreateQuiz"/>
 
-    <!-- View Results Button -->
-    <Button text="View Results"
-            onAction="#goToViewResults"/>
-
     <!-- 🔴 REQUIRED: Quiz List Container -->
     <!-- This is where quizzes will be displayed -->
     <VBox fx:id="quizList" spacing="10"/>
