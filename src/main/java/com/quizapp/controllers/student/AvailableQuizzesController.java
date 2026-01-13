@@ -33,90 +33,69 @@ public class AvailableQuizzesController {
         try {
             String studentEmail = Session.getUser().getEmail();
 
-            /* ===============================
-               GET COMPLETED QUIZZES
-            =============================== */
-            List<QuizResult> completedResults =
+            // Completed quizzes
+            List<QuizResult> completed =
                     RealtimeDatabaseService.getResultsByStudent(studentEmail);
 
-            Set<String> completedQuizIds = new HashSet<>();
-            for (QuizResult result : completedResults) {
-                completedQuizIds.add(result.getQuizId());
+            Set<String> completedIds = new HashSet<>();
+            for (QuizResult r : completed) {
+                completedIds.add(r.getQuizId());
             }
 
-            /* ===============================
-               GET PUBLISHED QUIZZES
-            =============================== */
-            List<Quiz> publishedQuizzes =
+            // Published quizzes
+            List<Quiz> quizzes =
                     StudentQuizService.getPublishedQuizzes();
 
-            if (publishedQuizzes.isEmpty()) {
+            if (quizzes.isEmpty()) {
                 Label empty = new Label("No quizzes available yet.");
                 empty.getStyleClass().add("empty-text");
                 quizList.getChildren().add(empty);
                 return;
             }
 
-            /* ===============================
-               DISPLAY QUIZZES
-            =============================== */
-            for (Quiz quiz : publishedQuizzes) {
-                addQuizCard(quiz, completedQuizIds.contains(quiz.getId()));
+            for (Quiz quiz : quizzes) {
+                addQuizCard(quiz, completedIds.contains(quiz.getId()));
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            quizList.getChildren().add(
-                    new Label("Failed to load quizzes.")
-            );
         }
     }
 
-    /* ===============================
-       QUIZ CARD
-    =============================== */
-    private void addQuizCard(Quiz quiz, boolean isCompleted) {
+    private void addQuizCard(Quiz quiz, boolean completed) {
 
-        // Card container
-        HBox quizCard = new HBox(20);
-        quizCard.setAlignment(Pos.CENTER_LEFT);
-        quizCard.getStyleClass().add("quiz-card");
+        HBox card = new HBox(20);
+        card.setAlignment(Pos.CENTER_LEFT);
+        card.getStyleClass().add("quiz-card");
 
-        // Left info box
-        VBox infoBox = new VBox(6);
-        infoBox.getStyleClass().add("quiz-info");
-        HBox.setHgrow(infoBox, Priority.ALWAYS);
+        VBox info = new VBox(6);
+        info.getStyleClass().add("quiz-info");
+        HBox.setHgrow(info, Priority.ALWAYS);
 
-        // Title
         Label title = new Label(quiz.getTitle());
         title.getStyleClass().add("quiz-title");
 
-        // Teacher
         Label teacher = new Label("Teacher: " + quiz.getTeacherEmail());
-        teacher.getStyleClass().add("quiz-meta");
-
-        // Subject
         Label subject = new Label("Subject: " + quiz.getSubject());
+
+        teacher.getStyleClass().add("quiz-meta");
         subject.getStyleClass().add("quiz-meta");
 
-        // Meta badges
-        HBox metaRow = new HBox(8);
-
-        Label difficulty = new Label(quiz.getDifficulty());
-        difficulty.getStyleClass().add("badge");
-
+        HBox badges = new HBox(8);
+        Label diff = new Label(quiz.getDifficulty());
         Label time = new Label(quiz.getTimeLimitSeconds() + "s");
+
+        diff.getStyleClass().add("badge");
         time.getStyleClass().add("badge");
 
-        metaRow.getChildren().addAll(difficulty, time);
+        badges.getChildren().addAll(diff, time);
 
-        infoBox.getChildren().addAll(title, teacher, subject, metaRow);
+        info.getChildren().addAll(title, teacher, subject, badges);
 
-        // Action button
         Button actionBtn;
 
-        if (isCompleted) {
-            actionBtn = new Button("Completed ✓");
+        if (completed) {
+            actionBtn = new Button("Completed");
             actionBtn.setDisable(true);
             actionBtn.getStyleClass().add("completed-btn");
         } else {
@@ -127,23 +106,22 @@ public class AvailableQuizzesController {
                 try {
                     Quiz fullQuiz =
                             StudentQuizService.getQuizById(quiz.getId());
-                    if (fullQuiz != null) {
-                        QuizSession.setQuiz(fullQuiz);
-                        Router.goTo("take-quiz");
-                    }
+                    QuizSession.setQuiz(fullQuiz);
+                    Router.goTo("take-quiz");
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             });
         }
 
-        quizCard.getChildren().addAll(infoBox, actionBtn);
-        quizList.getChildren().add(quizCard);
+        card.getChildren().addAll(info, actionBtn);
+        quizList.getChildren().add(card);
     }
 
     @FXML
     private void handleLogout() {
         Session.clear();
+        QuizSession.clear();
         Router.goTo("login");
     }
 }

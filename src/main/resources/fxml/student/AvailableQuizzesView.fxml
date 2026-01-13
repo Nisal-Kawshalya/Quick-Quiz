@@ -5,28 +5,43 @@
 
 <StackPane xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.quizapp.controllers.student.AvailableQuizzesController"
-           alignment="TOP_CENTER"
            styleClass="root">
 
-    <ScrollPane fitToWidth="true"
-                hbarPolicy="NEVER"
-                vbarPolicy="AS_NEEDED"
-                styleClass="scroll-pane">
+    <BorderPane maxWidth="1000">
 
-        <VBox spacing="24"
-              alignment="CENTER"
-              styleClass="dashboard-container">
+        <!-- ===== TOP BAR ===== -->
+        <top>
+            <HBox alignment="CENTER_RIGHT"
+                  spacing="10"
+                  styleClass="top-bar">
+                <Button text="Logout"
+                        onAction="#handleLogout"
+                        styleClass="logout-btn"/>
+            </HBox>
+        </top>
 
-            <Label text="Available Quizzes"
-                   styleClass="dashboard-title"/>
+        <!-- ===== CONTENT ===== -->
+        <center>
+            <ScrollPane fitToWidth="true"
+                        hbarPolicy="NEVER"
+                        vbarPolicy="AS_NEEDED"
+                        styleClass="scroll-pane">
 
-            <!-- Quiz list -->
-            <VBox fx:id="quizList"
-                  spacing="16"
-                  styleClass="quiz-list"/>
+                <VBox spacing="30"
+                      alignment="CENTER"
+                      styleClass="dashboard-container">
 
-        </VBox>
+                    <Label text="Available Quizzes"
+                           styleClass="dashboard-title"/>
 
-    </ScrollPane>
+                    <VBox fx:id="quizList"
+                          spacing="20"
+                          styleClass="quiz-list"/>
+
+                </VBox>
+            </ScrollPane>
+        </center>
+
+    </BorderPane>
 
 </StackPane>
