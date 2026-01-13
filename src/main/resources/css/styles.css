@@ -44,3 +44,91 @@
 .success {
     -fx-text-fill: green;
 }
+/* ===== Full background ===== */
+.root {
+    -fx-background-color: #f5f7fb;
+}
+
+/* ===== Card ===== */
+.login-card {
+    -fx-background-color: white;
+    -fx-padding: 40;
+    -fx-background-radius: 18;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 25, 0.3, 0, 8);
+}
+
+/* ===== App Name ===== */
+.app-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f4f6f;
+}
+
+/* ===== Title ===== */
+.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.subtitle {
+    -fx-font-size: 14px;
+    -fx-text-fill: #7f8c8d;
+}
+
+/* ===== Inputs ===== */
+.input {
+    -fx-pref-width: 300;
+    -fx-padding: 12;
+    -fx-font-size: 14px;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: #e0e0e0;
+    -fx-background-color: #fafafa;
+}
+
+.input:focused {
+    -fx-border-color: #1f4f6f;
+    -fx-background-color: white;
+}
+
+/* ===== Buttons ===== */
+.primary-button {
+    -fx-pref-width: 300;
+    -fx-padding: 12;
+    -fx-background-radius: 14;
+    -fx-background-color: #1f4f6f;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.primary-button:hover {
+    -fx-background-color: #163c55;
+}
+
+.secondary-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #1f4f6f;
+    -fx-font-size: 14px;
+}
+
+.secondary-button:hover {
+    -fx-underline: true;
+}
+
+/* ===== Error ===== */
+.error {
+    -fx-text-fill: #e74c3c;
+    -fx-font-size: 13px;
+}
+.login-card {
+    -fx-background-color: white;
+    -fx-padding: 40;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 30, 0.3, 0, 10);
+
+    /* 🔑 KEY FIX */
+    -fx-min-height: USE_PREF_SIZE;
+    -fx-max-height: USE_PREF_SIZE;
+}
