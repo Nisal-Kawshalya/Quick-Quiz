@@ -3,48 +3,54 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml"
+<StackPane xmlns="http://javafx.com/javafx/17"
+           xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.quizapp.controllers.dashboard.TeacherDashboardController"
-           alignment="TOP_CENTER"
            styleClass="root">
 
     <ScrollPane fitToWidth="true"
                 hbarPolicy="NEVER"
-                vbarPolicy="AS_NEEDED"
-                styleClass="scroll-pane">
+                vbarPolicy="AS_NEEDED">
 
-        <VBox spacing="24"
-              alignment="CENTER"
-              styleClass="dashboard-container">
+        <!-- OUTER FULL-WIDTH CONTAINER (forces centering) -->
+        <VBox alignment="CENTER"
+              style="-fx-padding: 40 0;">
 
-            <!-- Title -->
-            <Label text="Teacher Dashboard"
-                   styleClass="dashboard-title"/>
-
-            <!-- Action Card -->
-            <VBox spacing="12"
+            <!-- INNER FIXED-WIDTH DASHBOARD (ACTUALLY CENTERED) -->
+            <VBox fx:id="dashboardWrapper"
+                  spacing="30"
+                  maxWidth="900"
                   alignment="CENTER"
-                  styleClass="card">
+                  styleClass="dashboard-container">
 
-                <Label text="Manage Your Quizzes"
-                       styleClass="section-title"/>
+                <!-- TITLE -->
+                <Label text="Teacher Dashboard"
+                       styleClass="dashboard-title"/>
 
-                <Button text="Create Quiz"
-                        onAction="#goToCreateQuiz"
-                        styleClass="primary-btn"/>
+                <!-- CREATE QUIZ CARD -->
+                <VBox alignment="CENTER"
+                      spacing="12"
+                      styleClass="manage-card">
+
+                    <Label text="Manage Your Quizzes"
+                           styleClass="section-title"/>
+
+                    <Button text="Create Quiz"
+                            onAction="#goToCreateQuiz"
+                            styleClass="create-btn"/>
+                </VBox>
+
+                <!-- QUIZ LIST -->
+                <VBox fx:id="quizList"
+                      spacing="16"
+                      maxWidth="900"/>
+
+                <!-- LOGOUT -->
+                <Button text="Logout"
+                        onAction="#handleLogout"
+                        styleClass="logout-btn"/>
 
             </VBox>
-
-            <!-- Quiz List -->
-            <VBox fx:id="quizList"
-                  spacing="12"
-                  styleClass="quiz-list"/>
-
-            <!-- Logout -->
-            <Button text="Logout"
-                    onAction="#handleLogout"
-                    styleClass="logout-btn"/>
-
         </VBox>
 
     </ScrollPane>
