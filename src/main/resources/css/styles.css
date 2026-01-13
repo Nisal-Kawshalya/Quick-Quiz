@@ -132,3 +132,127 @@
     -fx-min-height: USE_PREF_SIZE;
     -fx-max-height: USE_PREF_SIZE;
 }
+
+/* ===== Dashboard scroll ===== */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* ===== Dashboard container ===== */
+.dashboard-container {
+    -fx-padding: 40 0;
+    -fx-pref-width: 900;
+}
+
+/* ===== Titles ===== */
+.dashboard-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.section-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+}
+
+/* ===== Card ===== */
+.card {
+    -fx-background-color: white;
+    -fx-padding: 24;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 25, 0.3, 0, 8);
+    -fx-max-width: 420;
+}
+
+/* ===== Quiz list ===== */
+.quiz-list {
+    -fx-max-width: 650;
+}
+
+/* ===== Buttons ===== */
+.primary-btn {
+    -fx-padding: 12 28;
+    -fx-background-radius: 12;
+    -fx-background-color: #1f4f6f;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.primary-btn:hover {
+    -fx-background-color: #163c55;
+}
+
+.logout-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #e74c3c;
+    -fx-font-size: 14px;
+}
+
+.logout-btn:hover {
+    -fx-underline: true;
+}
+
+/* ===== Quiz list container ===== */
+.quiz-list {
+    -fx-spacing: 16;
+    -fx-padding: 10 0 30 0;
+}
+
+/* ===== Quiz card ===== */
+.quiz-card {
+    -fx-background-color: white;
+    -fx-padding: 16 20;
+    -fx-background-radius: 14;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 16, 0.3, 0, 4);
+
+    -fx-min-width: 650;
+    -fx-max-width: 650;
+}
+
+/* ===== Quiz info ===== */
+.quiz-info {
+    -fx-pref-width: 420;
+}
+
+.quiz-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.quiz-meta {
+    -fx-font-size: 12px;
+    -fx-text-fill: #7f8c8d;
+}
+
+/* ===== Buttons ===== */
+.publish-btn {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-padding: 8 18;
+    -fx-font-size: 13px;
+}
+
+.publish-btn:hover {
+    -fx-background-color: #2980b9;
+}
+
+.results-btn {
+    -fx-background-color: #ecf0f1;
+    -fx-text-fill: #2c3e50;
+    -fx-background-radius: 10;
+    -fx-padding: 8 18;
+    -fx-font-size: 13px;
+}
+
+.results-btn:hover {
+    -fx-background-color: #dde3e6;
+}
