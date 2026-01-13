@@ -1,5 +1,9 @@
 package com.quizapp.controllers.student;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import com.quizapp.firebase.RealtimeDatabaseService;
 import com.quizapp.firebase.StudentQuizService;
 import com.quizapp.models.Quiz;
@@ -7,15 +11,14 @@ import com.quizapp.models.QuizResult;
 import com.quizapp.models.QuizSession;
 import com.quizapp.models.Session;
 import com.quizapp.routing.Router;
+
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class AvailableQuizzesController {
 
@@ -30,100 +33,35 @@ public class AvailableQuizzesController {
         try {
             String studentEmail = Session.getUser().getEmail();
 
-            // ✅ GET COMPLETED QUIZZES (BY QUIZ ID)List<QuizResult> completed =
-            List<QuizResult> completed =
-            RealtimeDatabaseService.getResultsByStudent(studentEmail);
+            /* ===============================
+               GET COMPLETED QUIZZES
+            =============================== */
+            List<QuizResult> completedResults =
+                    RealtimeDatabaseService.getResultsByStudent(studentEmail);
+
             Set<String> completedQuizIds = new HashSet<>();
-            for (QuizResult r : completed) {
-                completedQuizIds.add(r.getQuizId());
-        }
+            for (QuizResult result : completedResults) {
+                completedQuizIds.add(result.getQuizId());
+            }
 
-
-            // ✅ GET ALL PUBLISHED QUIZZES
+            /* ===============================
+               GET PUBLISHED QUIZZES
+            =============================== */
             List<Quiz> publishedQuizzes =
                     StudentQuizService.getPublishedQuizzes();
 
             if (publishedQuizzes.isEmpty()) {
-                quizList.getChildren().add(
-                        new Label("No quizzes available yet.")
-                );
+                Label empty = new Label("No quizzes available yet.");
+                empty.getStyleClass().add("empty-text");
+                quizList.getChildren().add(empty);
                 return;
             }
 
-            // ===============================
-            // SHOW QUIZZES
-            // ===============================
+            /* ===============================
+               DISPLAY QUIZZES
+            =============================== */
             for (Quiz quiz : publishedQuizzes) {
-
-                boolean isCompleted =
-                        completedQuizIds.contains(quiz.getId());
-
-                Label title = new Label("📘 " + quiz.getTitle());
-                title.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
-
-                Label teacherLabel =
-                        new Label("Teacher: " + quiz.getTeacherEmail());
-
-                Label subjectLabel =
-                        new Label("Subject: " + quiz.getSubject());
-
-                Label difficultyLabel =
-                        new Label("Difficulty: " + quiz.getDifficulty());
-
-                Label timeLabel =
-                        new Label("Time Limit: " + quiz.getTimeLimitSeconds() + " seconds");
-
-                Button actionButton;
-
-                if (isCompleted) {
-                    // ❌ ALREADY ATTEMPTED
-                    actionButton = new Button("Completed ✓");
-                    actionButton.setDisable(true);
-                    actionButton.setStyle(
-                            "-fx-background-color: #9E9E9E; -fx-text-fill: white;"
-                    );
-                } else {
-                    // ▶️ CAN TAKE QUIZ
-                    actionButton = new Button("Take Quiz");
-                    actionButton.setStyle(
-                            "-fx-background-color: #4CAF50; -fx-text-fill: white;"
-                    );
-
-                    actionButton.setOnAction(e -> {
-                        try {
-                            Quiz fullQuiz =
-                                    StudentQuizService.getQuizById(quiz.getId());
-
-                            if (fullQuiz != null) {
-                                QuizSession.setQuiz(fullQuiz);
-                                Router.goTo("take-quiz");
-                            }
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    });
-                }
-
-                VBox quizInfo = new VBox(
-                        5,
-                        title,
-                        teacherLabel,
-                        subjectLabel,
-                        difficultyLabel,
-                        timeLabel
-                );
-
-                quizInfo.setStyle("""
-                        -fx-padding: 15;
-                        -fx-border-color: #ccc;
-                        -fx-background-color: #f9f9f9;
-                        -fx-border-radius: 5;
-                        """);
-
-                HBox quizBox = new HBox(15, quizInfo, actionButton);
-                quizBox.setStyle("-fx-padding: 10;");
-
-                quizList.getChildren().add(quizBox);
+                addQuizCard(quiz, completedQuizIds.contains(quiz.getId()));
             }
 
         } catch (Exception e) {
@@ -134,8 +72,77 @@ public class AvailableQuizzesController {
         }
     }
 
+    /* ===============================
+       QUIZ CARD
+    =============================== */
+    private void addQuizCard(Quiz quiz, boolean isCompleted) {
+
+        // Card container
+        HBox quizCard = new HBox(20);
+        quizCard.setAlignment(Pos.CENTER_LEFT);
+        quizCard.getStyleClass().add("quiz-card");
+
+        // Left info box
+        VBox infoBox = new VBox(6);
+        infoBox.getStyleClass().add("quiz-info");
+        HBox.setHgrow(infoBox, Priority.ALWAYS);
+
+        // Title
+        Label title = new Label(quiz.getTitle());
+        title.getStyleClass().add("quiz-title");
+
+        // Teacher
+        Label teacher = new Label("Teacher: " + quiz.getTeacherEmail());
+        teacher.getStyleClass().add("quiz-meta");
+
+        // Subject
+        Label subject = new Label("Subject: " + quiz.getSubject());
+        subject.getStyleClass().add("quiz-meta");
+
+        // Meta badges
+        HBox metaRow = new HBox(8);
+
+        Label difficulty = new Label(quiz.getDifficulty());
+        difficulty.getStyleClass().add("badge");
+
+        Label time = new Label(quiz.getTimeLimitSeconds() + "s");
+        time.getStyleClass().add("badge");
+
+        metaRow.getChildren().addAll(difficulty, time);
+
+        infoBox.getChildren().addAll(title, teacher, subject, metaRow);
+
+        // Action button
+        Button actionBtn;
+
+        if (isCompleted) {
+            actionBtn = new Button("Completed ✓");
+            actionBtn.setDisable(true);
+            actionBtn.getStyleClass().add("completed-btn");
+        } else {
+            actionBtn = new Button("Take Quiz");
+            actionBtn.getStyleClass().add("take-btn");
+
+            actionBtn.setOnAction(e -> {
+                try {
+                    Quiz fullQuiz =
+                            StudentQuizService.getQuizById(quiz.getId());
+                    if (fullQuiz != null) {
+                        QuizSession.setQuiz(fullQuiz);
+                        Router.goTo("take-quiz");
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            });
+        }
+
+        quizCard.getChildren().addAll(infoBox, actionBtn);
+        quizList.getChildren().add(quizCard);
+    }
+
     @FXML
-    public void handleLogout() {
+    private void handleLogout() {
         Session.clear();
         Router.goTo("login");
     }
