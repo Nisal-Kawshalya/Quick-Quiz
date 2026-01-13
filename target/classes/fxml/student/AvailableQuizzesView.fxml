@@ -1,23 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.quizapp.controllers.student.AvailableQuizzesController">
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.quizapp.controllers.student.AvailableQuizzesController"
+           styleClass="root">
 
-    <VBox alignment="CENTER" spacing="15" style="-fx-padding: 20;">
-        <Label text="Available Quizzes" styleClass="title"/>
-         
-        <VBox fx:id="quizList" spacing="10" style="-fx-pref-width: 600;"/>
+    <BorderPane maxWidth="1000">
 
-        <Button text="Logout"
-                styleClass="logout-btn"
-                onAction="#handleLogout"/>
+        <!-- ===== TOP BAR ===== -->
+        <top>
+            <HBox alignment="CENTER_RIGHT"
+                  spacing="10"
+                  styleClass="top-bar">
+                <Button text="Logout"
+                        onAction="#handleLogout"
+                        styleClass="logout-btn"/>
+            </HBox>
+        </top>
 
-    </VBox>
+        <!-- ===== CONTENT ===== -->
+        <center>
+            <ScrollPane fitToWidth="true"
+                        hbarPolicy="NEVER"
+                        vbarPolicy="AS_NEEDED"
+                        styleClass="scroll-pane">
 
-</ScrollPane>
+                <VBox spacing="30"
+                      alignment="CENTER"
+                      styleClass="dashboard-container">
+
+                    <Label text="Available Quizzes"
+                           styleClass="dashboard-title"/>
+
+                    <VBox fx:id="quizList"
+                          spacing="20"
+                          styleClass="quiz-list"/>
+
+                </VBox>
+            </ScrollPane>
+        </center>
+
+    </BorderPane>
+
+</StackPane>

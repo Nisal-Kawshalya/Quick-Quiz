@@ -1,5 +1,6 @@
 package com.quizapp.controllers.quiz;
 
+import java.util.List;
 
 import com.quizapp.firebase.RealtimeDatabaseService;
 import com.quizapp.models.Question;
@@ -8,15 +9,15 @@ import com.quizapp.models.QuizResultSession;
 import com.quizapp.models.QuizSession;
 import com.quizapp.models.Session;
 import com.quizapp.routing.Router;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
-
-import java.util.List;
 
 public class TakeQuizController {
 
@@ -31,7 +32,7 @@ public class TakeQuizController {
     private Label progressLabel;
 
     @FXML
-    private RadioButton option1, option2, option3, option4;
+    private VBox optionsBox;
 
     // ===== LOGIC =====
     private ToggleGroup optionsGroup;
@@ -44,14 +45,6 @@ public class TakeQuizController {
     // ===== INITIALIZE =====
     @FXML
     public void initialize() {
-
-        optionsGroup = new ToggleGroup();
-
-        option1.setToggleGroup(optionsGroup);
-        option2.setToggleGroup(optionsGroup);
-        option3.setToggleGroup(optionsGroup);
-        option4.setToggleGroup(optionsGroup);
-
         loadQuiz();
         startTimer();
         showQuestion();
@@ -102,12 +95,17 @@ public class TakeQuizController {
 
         questionLabel.setText(q.getQuestionText());
 
-        option1.setText(q.getOptions().get(0));
-        option2.setText(q.getOptions().get(1));
-        option3.setText(q.getOptions().get(2));
-        option4.setText(q.getOptions().get(3));
+        optionsBox.getChildren().clear();
+        optionsGroup = new ToggleGroup();
 
-        optionsGroup.selectToggle(null);
+        List<String> options = q.getOptions();
+
+        for (int i = 0; i < options.size(); i++) {
+            RadioButton rb = new RadioButton(options.get(i));
+            rb.setToggleGroup(optionsGroup);
+            rb.setUserData(i);
+            optionsBox.getChildren().add(rb);
+        }
     }
 
     // ===== NEXT QUESTION =====
@@ -123,17 +121,29 @@ public class TakeQuizController {
             submitQuiz();
         }
     }
+@FXML
+private void handleLogout() {
+
+    // Stop timer safely
+    if (timeline != null) {
+        timeline.stop();
+    }
+
+    // Clear sessions
+    Session.clear();
+    QuizSession.clear();
+
+    // Go to login
+    Router.goTo("login");
+}
 
     // ===== CHECK ANSWER =====
     private void checkAnswer() {
 
-        RadioButton selected =
-                (RadioButton) optionsGroup.getSelectedToggle();
-
-        if (selected == null) return;
+        if (optionsGroup.getSelectedToggle() == null) return;
 
         int selectedIndex =
-                List.of(option1, option2, option3, option4).indexOf(selected);
+                (int) optionsGroup.getSelectedToggle().getUserData();
 
         if (selectedIndex ==
                 quiz.getQuestions().get(currentIndex).getCorrectIndex()) {
@@ -142,28 +152,25 @@ public class TakeQuizController {
     }
 
     // ===== SUBMIT QUIZ =====
-private void submitQuiz() {
+    private void submitQuiz() {
 
-    if (timeline != null) timeline.stop();
+        if (timeline != null) timeline.stop();
 
-    QuizResultSession.setResult(score, quiz.getQuestions().size());
+        QuizResultSession.setResult(score, quiz.getQuestions().size());
 
-    new Thread(() -> {
-        try {
-            RealtimeDatabaseService.saveQuizResult(
-                quiz.getId(),
-                Session.getUser().getEmail(),
-                score,
-                quiz.getQuestions().size()
-            );
+        new Thread(() -> {
+            try {
+                RealtimeDatabaseService.saveQuizResult(
+                        quiz.getId(),
+                        Session.getUser().getEmail(),
+                        score,
+                        quiz.getQuestions().size()
+                );
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }).start();
-
-    Router.goTo("quiz-result");
-}
-
-
+        Router.goTo("quiz-result");
+    }
 }

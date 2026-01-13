@@ -5,8 +5,15 @@ import com.quizapp.firebase.RealtimeDatabaseService;
 import com.quizapp.models.Session;
 import com.quizapp.models.User;
 import com.quizapp.routing.Router;
+
+import javafx.animation.FadeTransition;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 public class LoginController {
 
@@ -14,6 +21,33 @@ public class LoginController {
     @FXML private PasswordField passwordField;
     @FXML private Label errorLabel;
 
+    // 🔹 This is the CENTER CARD (VBox)
+    @FXML private VBox loginCard;
+
+    // 🔹 Runs automatically when FXML loads
+    @FXML
+    public void initialize() {
+        playIntroAnimation();
+    }
+
+    // 🔹 Fade + Slide animation
+    private void playIntroAnimation() {
+        loginCard.setOpacity(0);
+        loginCard.setTranslateY(30);
+
+        FadeTransition fade = new FadeTransition(Duration.millis(600), loginCard);
+        fade.setFromValue(0);
+        fade.setToValue(1);
+
+        TranslateTransition slide = new TranslateTransition(Duration.millis(600), loginCard);
+        slide.setFromY(30);
+        slide.setToY(0);
+
+        fade.play();
+        slide.play();
+    }
+
+    // 🔹 LOGIN LOGIC (UNCHANGED)
     @FXML
     private void handleLogin() {
 
@@ -26,8 +60,7 @@ public class LoginController {
         }
 
         try {
-            boolean success =
-                    FirebaseAuthService.login(email, password);
+            boolean success = FirebaseAuthService.login(email, password);
 
             if (!success) {
                 errorLabel.setText("Invalid email or password.");
@@ -35,7 +68,6 @@ public class LoginController {
             }
 
             String role = RealtimeDatabaseService.getUserRole(email);
-
 
             Session.setUser(new User(email, role));
 
@@ -53,6 +85,7 @@ public class LoginController {
         }
     }
 
+    // 🔹 Navigation
     @FXML
     private void goToRegister() {
         Router.goTo("register");

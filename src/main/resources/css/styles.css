@@ -44,3 +44,873 @@
 .success {
     -fx-text-fill: green;
 }
+/* ===== Full background ===== */
+.root {
+    -fx-background-color: #f5f7fb;
+}
+
+/* ===== Card ===== */
+.login-card {
+    -fx-background-color: white;
+    -fx-padding: 40;
+    -fx-background-radius: 18;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 25, 0.3, 0, 8);
+}
+
+/* ===== App Name ===== */
+.app-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f4f6f;
+}
+
+/* ===== Title ===== */
+.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.subtitle {
+    -fx-font-size: 14px;
+    -fx-text-fill: #7f8c8d;
+}
+
+/* ===== Inputs ===== */
+.input {
+    -fx-pref-width: 300;
+    -fx-padding: 12;
+    -fx-font-size: 14px;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: #e0e0e0;
+    -fx-background-color: #fafafa;
+}
+
+.input:focused {
+    -fx-border-color: #1f4f6f;
+    -fx-background-color: white;
+}
+
+/* ===== Buttons ===== */
+.primary-button {
+    -fx-pref-width: 300;
+    -fx-padding: 12;
+    -fx-background-radius: 14;
+    -fx-background-color: #1f4f6f;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.primary-button:hover {
+    -fx-background-color: #163c55;
+}
+
+.secondary-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #1f4f6f;
+    -fx-font-size: 14px;
+}
+
+.secondary-button:hover {
+    -fx-underline: true;
+}
+
+/* ===== Error ===== */
+.error {
+    -fx-text-fill: #e74c3c;
+    -fx-font-size: 13px;
+}
+.login-card {
+    -fx-background-color: white;
+    -fx-padding: 40;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 30, 0.3, 0, 10);
+
+    /* 🔑 KEY FIX */
+    -fx-min-height: USE_PREF_SIZE;
+    -fx-max-height: USE_PREF_SIZE;
+}
+
+/* ===== Dashboard scroll ===== */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* ===== Dashboard container ===== */
+.dashboard-container {
+    -fx-padding: 40 0;
+    -fx-pref-width: 900;
+}
+
+/* ===== Titles ===== */
+.dashboard-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.section-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+}
+
+/* ===== Card ===== */
+.card {
+    -fx-background-color: white;
+    -fx-padding: 24;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 25, 0.3, 0, 8);
+    -fx-max-width: 420;
+}
+
+/* ===== Quiz list ===== */
+.quiz-list {
+    -fx-max-width: 650;
+}
+
+/* ===== Buttons ===== */
+.primary-btn {
+    -fx-padding: 12 28;
+    -fx-background-radius: 12;
+    -fx-background-color: #1f4f6f;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.primary-btn:hover {
+    -fx-background-color: #163c55;
+}
+
+.logout-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #e74c3c;
+    -fx-font-size: 14px;
+}
+
+.logout-btn:hover {
+    -fx-underline: true;
+}
+
+/* ===== Quiz list container ===== */
+.quiz-list {
+    -fx-spacing: 16;
+    -fx-padding: 10 0 30 0;
+}
+
+/* ===== Quiz card ===== */
+.quiz-card {
+    -fx-background-color: white;
+    -fx-padding: 16 20;
+    -fx-background-radius: 14;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 16, 0.3, 0, 4);
+
+    -fx-min-width: 650;
+    -fx-max-width: 650;
+}
+
+/* ===== Quiz info ===== */
+.quiz-info {
+    -fx-pref-width: 420;
+}
+
+.quiz-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.quiz-meta {
+    -fx-font-size: 12px;
+    -fx-text-fill: #7f8c8d;
+}
+
+/* ===== Buttons ===== */
+.publish-btn {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-padding: 8 18;
+    -fx-font-size: 13px;
+}
+
+.publish-btn:hover {
+    -fx-background-color: #2980b9;
+}
+
+.results-btn {
+    -fx-background-color: #ecf0f1;
+    -fx-text-fill: #2c3e50;
+    -fx-background-radius: 10;
+    -fx-padding: 8 18;
+    -fx-font-size: 13px;
+}
+
+.results-btn:hover {
+    -fx-background-color: #dde3e6;
+}
+/* ===== ScrollPane ===== */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* ===== Dashboard container ===== */
+.dashboard-container {
+    -fx-padding: 40 0;
+    -fx-pref-width: 800;
+}
+
+/* ===== Titles ===== */
+.dashboard-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.section-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+}
+
+/* ===== Card ===== */
+.card {
+    -fx-background-color: white;
+    -fx-padding: 24;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 25, 0.3, 0, 8);
+    -fx-max-width: 420;
+}
+
+/* ===== Buttons ===== */
+.primary-btn {
+    -fx-padding: 12 28;
+    -fx-background-radius: 12;
+    -fx-background-color: #1f4f6f;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.primary-btn:hover {
+    -fx-background-color: #163c55;
+}
+
+.logout-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #e74c3c;
+    -fx-font-size: 14px;
+}
+
+.logout-btn:hover {
+    -fx-underline: true;
+}
+/* ===== Empty text ===== */
+.empty-text {
+    -fx-text-fill: #7f8c8d;
+    -fx-font-size: 14px;
+}
+
+/* ===== Quiz Card ===== */
+.quiz-card {
+    -fx-background-color: white;
+    -fx-padding: 18 22;
+    -fx-background-radius: 14;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 16, 0.3, 0, 4);
+    -fx-min-width: 700;
+    -fx-max-width: 700;
+}
+
+/* ===== Quiz Info ===== */
+.quiz-info {
+    -fx-pref-width: 500;
+}
+
+.quiz-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.quiz-meta {
+    -fx-font-size: 12px;
+    -fx-text-fill: #7f8c8d;
+}
+
+/* ===== Buttons ===== */
+.take-btn {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-padding: 10 22;
+    -fx-font-size: 14px;
+}
+
+.take-btn:hover {
+    -fx-background-color: #43a047;
+}
+
+.completed-btn {
+    -fx-background-color: #9E9E9E;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-padding: 10 22;
+}
+.status-new {
+    -fx-background-color: #e0f2fe;
+    -fx-text-fill: #0369a1;
+    -fx-padding: 4 10;
+    -fx-background-radius: 8;
+}
+
+.status-done {
+    -fx-background-color: #dcfce7;
+    -fx-text-fill: #166534;
+    -fx-padding: 4 10;
+    -fx-background-radius: 8;
+}.quiz-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #1f2d3d;
+    -fx-padding: 0 0 4 0;
+}
+.quiz-card {
+    -fx-cursor: hand;
+    -fx-transition: all 0.2s ease;
+}
+
+.quiz-card:hover {
+    -fx-translate-y: -2;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.14), 22, 0.3, 0, 8);
+}
+.badge {
+    -fx-background-color: #eef2f7;
+    -fx-text-fill: #475569;
+    -fx-padding: 4 10;
+    -fx-background-radius: 8;
+    -fx-font-size: 11px;
+}
+
+/* ===== Quiz Container ===== */
+.quiz-container {
+    -fx-padding: 40;
+}
+
+/* ===== Quiz Card ===== */
+.quiz-card {
+    -fx-background-color: white;
+    -fx-padding: 32 36;
+    -fx-background-radius: 18;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 25, 0.3, 0, 8);
+    -fx-max-width: 600;
+}
+
+/* ===== Timer & Progress ===== */
+.timer {
+    -fx-text-fill: #e67e22;
+    -fx-font-size: 14px;
+}
+
+.progress {
+    -fx-text-fill: #7f8c8d;
+    -fx-font-size: 13px;
+}
+
+/* ===== Question ===== */
+.question {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-text-alignment: center;
+}
+
+/* ===== Options ===== */
+.radio-button {
+    -fx-font-size: 14px;
+}
+
+/* ===== Button ===== */
+.primary-btn {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-padding: 12 32;
+    -fx-background-radius: 12;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.primary-btn:hover {
+    -fx-background-color: #2c80b4;
+}
+.timer-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FB8C00; /* orange */
+}
+
+.timer-label.warning {
+    -fx-text-fill: #E53935; /* red */
+}
+.top-bar {
+    -fx-padding: 10 20 0 20;
+}
+
+.logout-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #E53935;
+    -fx-font-weight: bold;
+}
+
+.logout-btn:hover {
+    -fx-text-fill: #B71C1C;
+}
+.root {
+    -fx-background-color: #f5f7fb;
+}
+
+.dashboard-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.quiz-card {
+    -fx-background-color: white;
+    -fx-padding: 24;
+    -fx-background-radius: 18;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 18, 0, 0, 6);
+}
+
+.quiz-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.quiz-meta {
+    -fx-text-fill: #6c7a89;
+}
+
+.badge {
+    -fx-background-color: #eef3f9;
+    -fx-background-radius: 10;
+    -fx-padding: 4 10;
+}
+
+.take-btn {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-background-radius: 12;
+    -fx-padding: 10 22;
+}
+
+.completed-btn {
+    -fx-background-color: #dcdcdc;
+    -fx-text-fill: white;
+    -fx-background-radius: 12;
+    -fx-padding: 10 22;
+}
+
+.logout-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #E53935;
+    -fx-font-weight: bold;
+}
+
+.top-bar {
+    -fx-padding: 12 20;
+}
+/* ===== GLOBAL ===== */
+.root {
+    -fx-background-color: #f4f6fb;
+    -fx-font-family: "Segoe UI";
+}
+
+/* ===== TITLES ===== */
+.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+/* ===== TOP BAR ===== */
+.top-bar {
+    -fx-padding: 12 20;
+    -fx-background-color: transparent;
+}
+
+.logout-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #e53935;
+    -fx-font-weight: bold;
+}
+
+.logout-btn:hover {
+    -fx-text-fill: #b71c1c;
+}
+
+/* ===== QUIZ / CARD CONTAINERS ===== */
+.quiz-container,
+.dashboard-container {
+    -fx-padding: 30;
+}
+
+.quiz-card {
+    -fx-background-color: white;
+    -fx-padding: 25;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 16, 0, 0, 6);
+}
+
+/* ===== QUESTIONS ===== */
+.question {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+}
+
+.progress {
+    -fx-text-fill: #7f8c8d;
+}
+
+/* ===== BUTTONS ===== */
+.primary-btn {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 12;
+    -fx-padding: 10 22;
+}
+
+.primary-btn:hover {
+    -fx-background-color: #43a047;
+}
+
+/* ===== BADGES ===== */
+.badge {
+    -fx-background-color: #eef3f9;
+    -fx-padding: 4 10;
+    -fx-background-radius: 10;
+}
+
+/* ===== FORMS ===== */
+.text-field {
+    -fx-background-radius: 10;
+    -fx-padding: 8;
+}
+
+/* ===== GLOBAL ===== */
+.root {
+    -fx-background-color: #f4f6fb;
+    -fx-font-family: "Segoe UI";
+}
+
+/* ===== SCROLL ===== */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+/* ===== TOP BAR ===== */
+.top-bar {
+    -fx-padding: 12 20;
+}
+
+.logout-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #e53935;
+    -fx-font-weight: bold;
+}
+
+.logout-btn:hover {
+    -fx-text-fill: #b71c1c;
+}
+
+/* ===== CONTAINER ===== */
+.quiz-container {
+    -fx-padding: 30;
+    -fx-max-width: 600;
+}
+
+/* ===== TITLES ===== */
+.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.section-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+}
+
+.section-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #555;
+}
+
+/* ===== INPUTS ===== */
+.input {
+    -fx-background-radius: 10;
+    -fx-padding: 8;
+}
+
+/* ===== BUTTONS ===== */
+.primary-btn {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 14;
+    -fx-padding: 10 24;
+}
+
+.primary-btn:hover {
+    -fx-background-color: #43a047;
+}
+
+/* ===== QUESTIONS LIST ===== */
+.question-list {
+    -fx-padding: 10;
+}
+
+/* ===== STATUS ===== */
+.status-label {
+    -fx-text-fill: #d32f2f;
+    -fx-font-size: 12px;
+}
+
+.quiz-container {
+    -fx-padding: 30;
+    -fx-max-width: 600;
+}
+
+.top-bar {
+    -fx-padding: 15;
+}
+
+.title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+}
+
+.section-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.primary-btn {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-padding: 10 30;
+    -fx-background-radius: 10;
+}
+
+.secondary-btn {
+    -fx-background-color: #2196F3;
+    -fx-text-fill: white;
+    -fx-padding: 8 24;
+    -fx-background-radius: 10;
+}
+
+.logout-btn {
+    -fx-text-fill: red;
+    -fx-background-color: transparent;
+    -fx-font-weight: bold;
+}
+
+.dashboard-container {
+    -fx-padding: 30;
+    -fx-max-width: 800;
+}
+
+.results-list {
+    -fx-padding: 15;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+}
+
+.secondary-btn {
+    -fx-background-color: #2196F3;
+    -fx-text-fill: white;
+    -fx-padding: 10 30;
+    -fx-background-radius: 10;
+}
+
+/* ===== RESULTS PAGE ===== */
+
+.result-card {
+    -fx-background-color: white;
+    -fx-padding: 20;
+    -fx-spacing: 8;
+    -fx-background-radius: 16;
+    -fx-border-radius: 16;
+    -fx-max-width: 750;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 15, 0, 0, 4);
+}
+
+.result-header {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.result-text {
+    -fx-font-size: 14px;
+}
+
+.pass-badge {
+    -fx-text-fill: #2E7D32;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.fail-badge {
+    -fx-text-fill: #C62828;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.empty-text {
+    -fx-text-fill: #666;
+    -fx-font-size: 14px;
+}
+
+.error-text {
+    -fx-text-fill: red;
+    -fx-font-size: 14px;
+}
+
+/* ROOT */
+.root {
+    -fx-background-color: #f5f7fb;
+}
+
+/* DASHBOARD */
+.dashboard-container {
+    -fx-padding: 40 20 40 20;
+}
+
+.dashboard-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+}
+
+/* MANAGE CARD */
+.manage-card {
+    -fx-background-color: white;
+    -fx-padding: 30;
+    -fx-background-radius: 18;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 5);
+}
+
+.section-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.create-btn {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10 28;
+    -fx-background-radius: 12;
+}
+
+/* QUIZ CARD */
+.quiz-card {
+    -fx-background-color: white;
+    -fx-padding: 20;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 12, 0, 0, 4);
+}
+
+.quiz-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.quiz-meta {
+    -fx-text-fill: #666;
+    -fx-font-size: 13px;
+}
+
+/* BUTTONS */
+.publish-btn {
+    -fx-background-color: #90CAF9;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+}
+
+.results-btn {
+    -fx-background-color: #ECEFF1;
+    -fx-background-radius: 10;
+}
+
+/* LOGOUT */
+.logout-btn {
+    -fx-text-fill: red;
+    -fx-background-color: transparent;
+    -fx-font-weight: bold;
+}
+
+.root {
+    -fx-background-color: #f5f7fb;
+}
+
+.dashboard-container {
+    -fx-padding: 40;
+}
+
+.dashboard-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+}
+
+.manage-card {
+    -fx-background-color: white;
+    -fx-padding: 30;
+    -fx-background-radius: 18;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 5);
+}
+
+.section-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.create-btn {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10 28;
+    -fx-background-radius: 12;
+}
+
+.quiz-card {
+    -fx-background-color: white;
+    -fx-padding: 20;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 12, 0, 0, 4);
+}
+
+.logout-btn {
+    -fx-text-fill: red;
+    -fx-background-color: transparent;
+    -fx-font-weight: bold;
+}

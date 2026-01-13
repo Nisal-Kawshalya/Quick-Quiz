@@ -1,17 +1,22 @@
 package com.quizapp.controllers.quiz;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.quizapp.firebase.TeacherQuizService;
 import com.quizapp.models.Question;
 import com.quizapp.models.Quiz;
 import com.quizapp.models.Session;
 import com.quizapp.routing.Router;
+
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CreateQuizController {
 
@@ -47,13 +52,20 @@ public class CreateQuizController {
     // ===============================
     private ToggleGroup correctGroup;
     private final List<Question> questions = new ArrayList<>();
-    private Integer editingIndex = null; // Index of question being edited, null if adding new
+    private Integer editingIndex = null;
 
     // ===============================
     // INITIALIZE
     // ===============================
     @FXML
     public void initialize() {
+
+        // 🔐 PROTECT AGAINST NULL SESSION
+        if (Session.getUser() == null) {
+            System.err.println("❌ Session is NULL in CreateQuizController");
+            Router.goTo("login");
+            return;
+        }
 
         correctGroup = new ToggleGroup();
 
@@ -98,12 +110,10 @@ public class CreateQuizController {
         );
 
         if (editingIndex != null) {
-            // Update existing question
             questions.set(editingIndex, question);
             editingIndex = null;
             statusLabel.setText("Question updated! Total: " + questions.size());
         } else {
-            // Add new question
             questions.add(question);
             statusLabel.setText("Question added! Total: " + questions.size());
         }
@@ -113,7 +123,7 @@ public class CreateQuizController {
     }
 
     // ===============================
-    // SAVE QUIZ (TEACHER → FIREBASE)
+    // SAVE QUIZ
     // ===============================
     @FXML
     private void saveQuiz() {
@@ -122,30 +132,25 @@ public class CreateQuizController {
                 || timeField.getText().isEmpty()
                 || questions.isEmpty()) {
 
-            statusLabel.setText(
-                    "Quiz title, time, and at least one question required."
-            );
+            statusLabel.setText("Quiz title, time, and at least one question required.");
             return;
         }
 
         try {
             int timeLimit = Integer.parseInt(timeField.getText());
 
-            // 🔐 Logged-in teacher email
             String teacherEmail = Session.getUser().getEmail();
 
-            // 🧠 Build Quiz object (teacher-side constructor)
             Quiz quiz = new Quiz(
-                    null,                 // id (generated in service)
+                    null,
                     teacherEmail,
                     titleField.getText(),
-                    "General",             // subject (can enhance later)
-                    "Medium",              // difficulty (can enhance later)
+                    "General",
+                    "Medium",
                     timeLimit,
                     questions
             );
 
-            // 💾 SAVE TO FIREBASE
             TeacherQuizService.saveQuiz(quiz);
 
             statusLabel.setText("Quiz saved successfully!");
@@ -163,51 +168,48 @@ public class CreateQuizController {
     // REFRESH QUESTIONS LIST
     // ===============================
     private void refreshQuestionsList() {
+
         questionsList.getChildren().clear();
+
+        if (questions.isEmpty()) {
+            questionsList.getChildren().add(
+                    new Label("No questions added yet.")
+            );
+            return;
+        }
 
         for (int i = 0; i < questions.size(); i++) {
             Question q = questions.get(i);
             int index = i;
 
-            Label questionNum = new Label("Question " + (i + 1) + ":");
-            questionNum.setStyle("-fx-font-weight: bold;");
+            Label num = new Label("Question " + (i + 1));
+            num.setStyle("-fx-font-weight: bold;");
 
-            Label questionText = new Label(q.getQuestionText());
-            questionText.setWrapText(true);
+            Label text = new Label(q.getQuestionText());
+            text.setWrapText(true);
 
-            Label optionsLabel = new Label(
-                    "Options: " + String.join(", ", q.getOptions())
-            );
-            optionsLabel.setWrapText(true);
-
-            Label correctLabel = new Label(
-                    "Correct Answer: Option " + (q.getCorrectIndex() + 1)
-            );
+            Label options = new Label("Options: " + String.join(", ", q.getOptions()));
+            Label correct = new Label("Correct Answer: Option " + (q.getCorrectIndex() + 1));
 
             Button editBtn = new Button("Edit");
             editBtn.setOnAction(e -> editQuestion(index));
 
             Button deleteBtn = new Button("Delete");
-            deleteBtn.setStyle("-fx-background-color: #ff4444; -fx-text-fill: white;");
+            deleteBtn.setStyle("-fx-background-color: #E53935; -fx-text-fill: white;");
             deleteBtn.setOnAction(e -> deleteQuestion(index));
 
-            HBox buttonsBox = new HBox(10, editBtn, deleteBtn);
+            HBox actions = new HBox(10, editBtn, deleteBtn);
 
-            VBox questionBox = new VBox(5, questionNum, questionText, optionsLabel, correctLabel, buttonsBox);
-            questionBox.setStyle("""
+            VBox box = new VBox(6, num, text, options, correct, actions);
+            box.setStyle("""
                     -fx-padding: 10;
                     -fx-border-color: #ccc;
-                    -fx-border-radius: 5;
                     -fx-background-color: #f9f9f9;
+                    -fx-border-radius: 5;
                     -fx-background-radius: 5;
                     """);
 
-            questionsList.getChildren().add(questionBox);
-        }
-
-        if (questions.isEmpty()) {
-            Label noQuestionsLabel = new Label("No questions added yet.");
-            questionsList.getChildren().add(noQuestionsLabel);
+            questionsList.getChildren().add(box);
         }
     }
 
@@ -215,6 +217,7 @@ public class CreateQuizController {
     // EDIT QUESTION
     // ===============================
     private void editQuestion(int index) {
+
         Question q = questions.get(index);
 
         questionField.setText(q.getQuestionText());
@@ -223,12 +226,11 @@ public class CreateQuizController {
         option3Field.setText(q.getOptions().get(2));
         option4Field.setText(q.getOptions().get(3));
 
-        // Set correct answer
-        RadioButton[] radioButtons = {correct1, correct2, correct3, correct4};
-        correctGroup.selectToggle(radioButtons[q.getCorrectIndex()]);
+        RadioButton[] radios = {correct1, correct2, correct3, correct4};
+        correctGroup.selectToggle(radios[q.getCorrectIndex()]);
 
         editingIndex = index;
-        statusLabel.setText("Editing question " + (index + 1) + ". Modify and click 'Add Question' to save changes.");
+        statusLabel.setText("Editing question " + (index + 1));
     }
 
     // ===============================
@@ -238,17 +240,12 @@ public class CreateQuizController {
         questions.remove(index);
         refreshQuestionsList();
         statusLabel.setText("Question deleted. Total: " + questions.size());
-
-        if (editingIndex != null && editingIndex == index) {
-            editingIndex = null;
-            clearQuestionForm();
-        } else if (editingIndex != null && editingIndex > index) {
-            editingIndex--; // Adjust editing index if needed
-        }
+        editingIndex = null;
+        clearQuestionForm();
     }
 
     // ===============================
-    // CLEAR QUESTION FORM
+    // CLEAR FORM
     // ===============================
     private void clearQuestionForm() {
         questionField.clear();
@@ -257,6 +254,14 @@ public class CreateQuizController {
         option3Field.clear();
         option4Field.clear();
         correctGroup.selectToggle(null);
-        editingIndex = null;
+    }
+
+    // ===============================
+    // LOGOUT  ✅ REQUIRED
+    // ===============================
+    @FXML
+    private void handleLogout() {
+        Session.clear();
+        Router.goTo("login");
     }
 }

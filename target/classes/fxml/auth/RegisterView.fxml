@@ -2,28 +2,47 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
 
-<VBox spacing="15"
-      alignment="CENTER"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.quizapp.controllers.auth.RegisterController">
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.quizapp.controllers.auth.RegisterController"
+           styleClass="root">
 
-    <padding>
-        <Insets top="40" right="40" bottom="40" left="40"/>
-    </padding>
+    <VBox fx:id="registerCard"
+          alignment="CENTER"
+          spacing="18"
+          maxWidth="400"
+          styleClass="login-card">
 
-    <Label text="Register" styleClass="title"/>
+        <Label text="Create Account" styleClass="title"/>
+        <Label text="Join the quiz platform" styleClass="subtitle"/>
 
-    <TextField fx:id="nameField" promptText="Full Name"/>
-    <TextField fx:id="emailField" promptText="Email"/>
-    <PasswordField fx:id="passwordField" promptText="Password"/>
+        <TextField fx:id="nameField"
+                   promptText="Full Name"
+                   styleClass="input"/>
 
-    <ComboBox fx:id="roleBox" promptText="Select Role"/>
+        <TextField fx:id="emailField"
+                   promptText="Email Address"
+                   styleClass="input"/>
 
-    <Button text="Register" onAction="#handleRegister"/>
-    <Button text="Back to Login" onAction="#goToLogin"/>
+        <PasswordField fx:id="passwordField"
+                       promptText="Password"
+                       styleClass="input"/>
 
-    <Label fx:id="messageLabel"/>
+        <ComboBox fx:id="roleBox"
+                  promptText="Select Role"
+                  styleClass="input"/>
 
-</VBox>
+        <Button text="Register"
+                onAction="#handleRegister"
+                styleClass="primary-button"/>
+
+        <Button text="Back to Login"
+                onAction="#goToLogin"
+                styleClass="secondary-button"/>
+
+        <Label fx:id="messageLabel"
+               styleClass="error"/>
+
+    </VBox>
+
+</StackPane>

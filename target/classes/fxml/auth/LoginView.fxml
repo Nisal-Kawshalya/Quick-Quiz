@@ -2,33 +2,42 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
 
-<VBox spacing="15"
-      alignment="CENTER"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.quizapp.controllers.auth.LoginController">
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.quizapp.controllers.auth.LoginController"
+           alignment="CENTER"
+           styleClass="root">
 
-    <padding>
-        <Insets top="40" right="40" bottom="40" left="40"/>
-    </padding>
+    <VBox fx:id="loginCard"
+          alignment="CENTER"
+          spacing="18"
+          maxWidth="380"
+          styleClass="login-card">
 
-    <Label text="Login" styleClass="title"/>
+        <Label text="QuizMaster Pro" styleClass="app-title"/>
 
-    <TextField fx:id="emailField"
-               promptText="Email or Username"/>
+        <Label text="Welcome Back" styleClass="title"/>
+        <Label text="Login to your account" styleClass="subtitle"/>
 
-    <PasswordField fx:id="passwordField"
-                   promptText="Password"/>
+        <TextField fx:id="emailField"
+                   promptText="Email or Username"
+                   styleClass="input"/>
 
-    <Button text="Login"
-             prefWidth="300"
-            onAction="#handleLogin"/>
+        <PasswordField fx:id="passwordField"
+                       promptText="Password"
+                       styleClass="input"/>
 
-    <Button text="Create Account"
-            onAction="#goToRegister"/>
+        <Button text="Login"
+                onAction="#handleLogin"
+                styleClass="primary-button"/>
 
-    <Label fx:id="errorLabel"
-           styleClass="error"/>
+        <Button text="Create Account"
+                onAction="#goToRegister"
+                styleClass="secondary-button"/>
 
-</VBox>
+        <Label fx:id="errorLabel"
+               styleClass="error"/>
+
+    </VBox>
+
+</StackPane>

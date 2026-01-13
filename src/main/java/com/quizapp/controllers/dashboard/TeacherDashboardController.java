@@ -1,18 +1,20 @@
 package com.quizapp.controllers.dashboard;
 
+import java.util.List;
+
 import com.quizapp.firebase.TeacherQuizService;
 import com.quizapp.models.Quiz;
 import com.quizapp.models.QuizSession;
 import com.quizapp.models.Session;
 import com.quizapp.routing.Router;
+
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
-import java.util.List;
 
 public class TeacherDashboardController {
 
@@ -22,7 +24,7 @@ public class TeacherDashboardController {
     private List<Quiz> myQuizzes;
 
     // ===============================
-    // LOAD TEACHER QUIZZES
+    // INITIALIZE & LOAD QUIZZES
     // ===============================
     @FXML
     public void initialize() {
@@ -33,67 +35,84 @@ public class TeacherDashboardController {
             String teacherEmail = Session.getUser().getEmail();
             myQuizzes = TeacherQuizService.getQuizzesByTeacher(teacherEmail);
 
-            if (myQuizzes.isEmpty()) {
-                quizList.getChildren().add(
-                        new Label("No quizzes created yet.")
-                );
+            if (myQuizzes == null || myQuizzes.isEmpty()) {
+                Label empty = new Label("No quizzes created yet.");
+                empty.setStyle("-fx-text-fill: #7f8c8d; -fx-font-size: 14px;");
+                quizList.getChildren().add(empty);
                 return;
             }
 
             for (Quiz quiz : myQuizzes) {
-
-                // ===== QUIZ INFO =====
-                Label title = new Label("📘 " + quiz.getTitle());
-                Label info = new Label(
-                        "Difficulty: " + quiz.getDifficulty()
-                                + " | Time: " + quiz.getTimeLimitSeconds() + "s"
-                );
-
-                // ===== PUBLISH BUTTON =====
-                Button publishBtn = new Button(
-                        quiz.isPublished() ? "Published" : "Publish"
-                );
-                publishBtn.setDisable(quiz.isPublished());
-
-                publishBtn.setOnAction(e -> {
-                    try {
-                        TeacherQuizService.publishQuiz(quiz.getId());
-                        publishBtn.setText("Published");
-                        publishBtn.setDisable(true);
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                });
-
-                // ===== RESULTS BUTTON (IMPORTANT) =====
-                Button resultsBtn = new Button("Results");
-                resultsBtn.setDisable(!quiz.isPublished());
-
-                resultsBtn.setOnAction(e -> {
-                    // Store selected quiz
-                    QuizSession.setQuiz(quiz);
-                    Router.goTo("view-results");
-                });
-
-                // ===== ACTION BAR =====
-                HBox actions = new HBox(10, publishBtn, resultsBtn);
-
-                VBox quizBox = new VBox(5, title, info, actions);
-                quizBox.setStyle("""
-                        -fx-padding: 10;
-                        -fx-border-color: #ccc;
-                        -fx-background-color: #f9f9f9;
-                        """);
-
-                quizList.getChildren().add(quizBox);
+                addQuizCard(quiz);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            quizList.getChildren().add(
-                    new Label("Failed to load quizzes.")
-            );
+            Label error = new Label("Failed to load quizzes.");
+            error.setStyle("-fx-text-fill: red;");
+            quizList.getChildren().add(error);
         }
+    }
+
+    // ===============================
+    // CREATE A SINGLE QUIZ CARD
+    // ===============================
+    private void addQuizCard(Quiz quiz) {
+
+        /* ===== OUTER CARD ===== */
+        HBox quizCard = new HBox(20);
+        quizCard.getStyleClass().add("quiz-card");
+        quizCard.setAlignment(Pos.CENTER_LEFT);
+
+        /* ===== LEFT INFO ===== */
+        VBox infoBox = new VBox(6);
+        infoBox.getStyleClass().add("quiz-info");
+
+        Label title = new Label(quiz.getTitle());
+        title.getStyleClass().add("quiz-title");
+
+        Label meta = new Label(
+                "Difficulty: " + quiz.getDifficulty()
+                        + " | Time: " + quiz.getTimeLimitSeconds() + "s"
+        );
+        meta.getStyleClass().add("quiz-meta");
+
+        infoBox.getChildren().addAll(title, meta);
+
+        /* ===== RIGHT ACTIONS ===== */
+        HBox actions = new HBox(10);
+        actions.setAlignment(Pos.CENTER_RIGHT);
+
+        Button publishBtn = new Button(
+                quiz.isPublished() ? "Published" : "Publish"
+        );
+        publishBtn.getStyleClass().add("publish-btn");
+        publishBtn.setDisable(quiz.isPublished());
+
+        publishBtn.setOnAction(e -> {
+            try {
+                TeacherQuizService.publishQuiz(quiz.getId());
+                publishBtn.setText("Published");
+                publishBtn.setDisable(true);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        Button resultsBtn = new Button("Results");
+        resultsBtn.getStyleClass().add("results-btn");
+        resultsBtn.setDisable(!quiz.isPublished());
+
+        resultsBtn.setOnAction(e -> {
+            QuizSession.setQuiz(quiz);
+            Router.goTo("view-results");
+        });
+
+        actions.getChildren().addAll(publishBtn, resultsBtn);
+
+        /* ===== COMBINE ===== */
+        quizCard.getChildren().addAll(infoBox, actions);
+        quizList.getChildren().add(quizCard);
     }
 
     // ===============================
@@ -116,7 +135,7 @@ public class TeacherDashboardController {
         alert.setContentText("Your session will be cleared.");
 
         alert.showAndWait().ifPresent(response -> {
-            if (response.getText().equals("OK")) {
+            if (response.getText().equalsIgnoreCase("OK")) {
                 Session.clear();
                 Router.goTo("login");
             }

@@ -1,25 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 
-<VBox spacing="15"
-      alignment="CENTER"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.quizapp.controllers.quiz.TakeQuizController">
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.quizapp.controllers.quiz.TakeQuizController"
+           styleClass="root">
 
-    <Label fx:id="timerLabel"/>
+    <!-- MAIN LAYOUT -->
+    <BorderPane maxWidth="900">
 
-    <Label fx:id="progressLabel"
-           style="-fx-font-size: 14px; -fx-text-fill: #555;"/>
+        <!-- ===== TOP BAR ===== -->
+        <top>
+            <HBox alignment="CENTER_RIGHT"
+                  spacing="10"
+                  styleClass="top-bar">
+                <Button text="Logout"
+                        onAction="#handleLogout"
+                        styleClass="logout-btn"/>
+            </HBox>
+        </top>
 
-    <Label fx:id="questionLabel" styleClass="title"/>
+        <!-- ===== CENTER CONTENT ===== -->
+        <center>
+            <VBox spacing="24"
+                  alignment="CENTER"
+                  styleClass="quiz-container">
 
-    <RadioButton fx:id="option1"/>
-    <RadioButton fx:id="option2"/>
-    <RadioButton fx:id="option3"/>
-    <RadioButton fx:id="option4"/>
+                <!-- Timer -->
+                <Label fx:id="timerLabel"
+                       styleClass="timer-label"/>
 
-    <Button text="Next" onAction="#nextQuestion"/>
+                <!-- Progress -->
+                <Label fx:id="progressLabel"
+                       styleClass="progress"/>
 
-</VBox>
+                <!-- Quiz Card -->
+                <VBox spacing="20"
+                      alignment="CENTER"
+                      styleClass="quiz-card">
+
+                    <!-- Question -->
+                    <Label fx:id="questionLabel"
+                           wrapText="true"
+                           styleClass="question"/>
+
+                    <!-- Options -->
+                    <VBox fx:id="optionsBox"
+                          spacing="12"/>
+
+                    <!-- Next Button -->
+                    <Button text="Next"
+                            onAction="#nextQuestion"
+                            styleClass="primary-btn"/>
+
+                </VBox>
+            </VBox>
+        </center>
+
+    </BorderPane>
+
+</StackPane>
